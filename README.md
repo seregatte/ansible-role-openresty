@@ -47,5 +47,5 @@ João Paulo Seregatte <seregatte@gmail.com>
 TODO
 ------------
 
-Put the openresty configure options in ansible vars
-Submit to galaxy.ansible.com
+- Put the openresty configure options in ansible vars
+- Submit to galaxy.ansible.com
