@@ -1,0 +1,4 @@
+---
+# defaults file for nginx
+openresty_version: 1.7.7.2
+

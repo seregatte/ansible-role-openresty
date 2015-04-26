@@ -1,0 +1,12 @@
+---
+- hosts: all
+  sudo: True
+
+  vars:
+    openresty_version: 1.7.7.2
+
+  handlers:
+    - include: '../handlers/main.yml'
+
+  tasks:
+    - include: '../tasks/main.yml'
