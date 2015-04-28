@@ -13,7 +13,7 @@ Configures and installs openresty
 ### Openresty
 
 | Name 						| Default 								| Description 							|
-|---------------------------|-------------------------------------------------------------------------------|
+| ------------------------- |:-------------------------------------:|:-------------------------------------:|
 | openresty_version			| 1.7.7.2 								| Openresty Version 					|
 | with_luajit				| true									| Configure parameter					|
 | with_dav					| true									| Configure parameter					|
