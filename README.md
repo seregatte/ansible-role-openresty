@@ -7,6 +7,11 @@ Configures and installs openresty
 - Ansible 1.2+
 - Ubuntu 14.04+
 
+## Installation
+
+```shell
+$ ansible-galaxy install seregatte.openresty
+```
 
 ## Variables
 
@@ -50,7 +55,7 @@ Including an example of how to use your role:
       vars:
          - openresty_version: 1.7.7.2 # Optional because we already have a default value
       roles:
-         - ansible-role-openresty
+         - seregatte.openresty
 
 License
 -------
@@ -61,9 +66,3 @@ Author Information
 ------------------
 
 João Paulo Seregatte <seregatte@gmail.com>
-
-TODO
-------------
-
-- Put the openresty configure options in ansible vars
-- Submit to galaxy.ansible.com

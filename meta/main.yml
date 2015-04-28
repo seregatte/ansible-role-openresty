@@ -9,6 +9,8 @@ galaxy_info:
     versions:
     - all
   categories:
-  - system
+  - web
+  - development
+  - networking
 
 dependencies: []
