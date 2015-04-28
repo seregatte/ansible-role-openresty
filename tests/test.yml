@@ -4,6 +4,25 @@
 
   vars:
     openresty_version: 1.7.7.2
+    with_luajit: true
+    with_dav: true
+    with_flv: true
+    with_geoip: true
+    with_gzip_static: true
+    with_image_filter: true
+    with_realip: true
+    with_stub_status: true
+    with_ssl: true
+    with_sub: true
+    with_xslt: true
+    with_ipv6: true
+    with_sha1: "/usr/include/openssl"
+    with_md5: "/usr/include/openssl"
+    with_mail: true
+    with_mail_ssl: true
+    with_stub_status: true
+    with_secure_link: true
+    with_sub: true
 
   handlers:
     - include: '../handlers/main.yml'

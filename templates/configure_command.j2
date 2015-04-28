@@ -1,33 +1,31 @@
 #!/bin/bash
 mkdir /var/lib/nginx
 ./configure \
---with-luajit \
+--pid-path=/var/run/nginx.pid \
+--lock-path=/var/lock/nginx.lock \
 --sbin-path=/usr/sbin/nginx \
 --conf-path=/etc/nginx/nginx.conf \
 --error-log-path=/var/log/nginx/error.log \
+{% if with_luajit %} --with-luajit {% endif %}
+{% if with_dav %} --with-http_dav_module {% endif %}
+{% if with_flv %} --with-http_flv_module {% endif %}
+{% if with_geoip %} --with-http_geoip_module {% endif %}
+{% if with_gzip_static %} --with-http_gzip_static_module {% endif %}
+{% if with_image_filter %} --with-http_image_filter_module {% endif %}
+{% if with_realip %} --with-http_realip_module {% endif %}
+{% if with_stub_status %} --with-http_stub_status_module {% endif %}
+{% if with_ssl %} --with-http_ssl_module {% endif %}
+{% if with_sub %} --with-http_sub_module {% endif %}
+{% if with_xslt %} --with-http_xslt_module {% endif %}
+{% if with_ipv6 %} --with-ipv6 {% endif %}
+{% if with_mail %} --with-mail {% endif %}
+{% if with_mail_ssl %} --with-mail_ssl_module {% endif %}
+{% if with_secure_link %} --with-http_secure_link_module {% endif %}
+{% if with_sha1 %} --with-sha1={{ with_sha1 }} {% endif %}
+{% if with_md5 %} --with-md5={{ with_md5 }} {% endif %}
 --http-client-body-temp-path=/var/lib/nginx/body \
 --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
 --http-log-path=/var/log/nginx/access.log \
 --http-proxy-temp-path=/var/lib/nginx/proxy \
 --http-scgi-temp-path=/var/lib/nginx/scgi \
---http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
---lock-path=/var/lock/nginx.lock \
---pid-path=/var/run/nginx.pid \
---with-http_dav_module \
---with-http_flv_module \
---with-http_geoip_module \
---with-http_gzip_static_module \
---with-http_image_filter_module \
---with-http_realip_module \
---with-http_stub_status_module \
---with-http_ssl_module \
---with-http_sub_module \
---with-http_xslt_module \
---with-ipv6 \
---with-sha1=/usr/include/openssl \
---with-md5=/usr/include/openssl \
---with-mail \
---with-mail_ssl_module \
---with-http_stub_status_module \
---with-http_secure_link_module \
---with-http_sub_module 
+--http-uwsgi-temp-path=/var/lib/nginx/uwsgi
