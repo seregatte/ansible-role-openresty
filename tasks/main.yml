@@ -30,7 +30,7 @@
   when: resty_tar.stat.exists == False or resty_exe.stat.exists == False
 
 - name: Extract Openresty tarball
-  command: chdir=/tmp/ /bin/tar zxf openresty.tar.gz
+  unarchive: src=/tmp/openresty.tar.gz dest=/tmp/ copy=no
   when: resty_tar.stat.exists == False or resty_exe.stat.exists == False
 
 - name: Build configure command
