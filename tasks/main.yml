@@ -26,7 +26,7 @@
   when: resty_exe.stat.exists == False
 
 - name: Download Openresty source
-  get_url: url=http://openresty.org/download/ngx_openresty-{{ openresty_version }}.tar.gz dest=/tmp/openresty.tar.gz mode=0440
+  get_url: url={{ openresty_download_url }}{{ openresty_version }}.tar.gz dest=/tmp/openresty.tar.gz mode=0440
   when: resty_tar.stat.exists == False or resty_exe.stat.exists == False
 
 - name: Extract Openresty tarball

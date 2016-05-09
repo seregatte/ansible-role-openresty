@@ -1,6 +1,8 @@
 ---
 # defaults file for nginx
 openresty_version: 1.7.7.2
+# change to http://openresty.org/download/openresty- for >= 1.9.7.3
+openresty_download_url: http://openresty.org/download/ngx_openresty-
 with_luajit: true
 with_dav: true
 with_flv: true
