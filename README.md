@@ -19,7 +19,7 @@ $ ansible-galaxy install seregatte.openresty
 
 | Name 						| Default 								| Description 										|
 |---------------------------|---------------------------------------|---------------------------------------------------|
-| openresty_version			| 1.7.7.2 								| Openresty Version 								|
+| openresty_version			| 1.9.15.1 								| Openresty Version 								|
 | with_luajit				| true									| Compile with luajit support 						|          
 | with_dav					| true									| Compile with dav support 							|          
 | with_flv					| true									| Compile with flv support 							|          
@@ -36,9 +36,13 @@ $ ansible-galaxy install seregatte.openresty
 | with_md5					| "/usr/include/openssl"				| Compile with md support 							|          
 | with_mail 				| true									| Compile with mail support 						|          
 | with_mail_ssl				| true									| Compile with mail_ssl support 					|          
-| with_stub_status			| true									| Compile with stub_status support 					|          
 | with_secure_link			| true									| Compile with secure_link support 					|          
-| with_sub 					| true									| Compile with sub support 							|          
+| with_pcre_jit 			| true									| Compile with pcre jit support 					|          
+| with_debug 				| true									| Compile with debug module 						|          
+| with_auth_request 		| true									| Compile with auth_request module					|          
+| with_addition 			| true									| Compile with addition_module  					|          
+| with_gunzip 				| true									| Compile with gunzip module						|          
+| with_postgres 			| true									| Compile with PostgreSQL support					|          
 
 Dependencies
 ------------
@@ -51,9 +55,7 @@ Example Playbook
 
 Including an example of how to use your role:
 
-    - hosts: servers
-      vars:
-         - openresty_version: 1.7.7.2 # Optional because we already have a default value
+    - hosts: webservers
       roles:
          - seregatte.openresty
 
