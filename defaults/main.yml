@@ -1,8 +1,7 @@
 ---
 # defaults file for nginx
-openresty_version: 1.7.7.2
-# change to http://openresty.org/download/openresty- for >= 1.9.7.3
-openresty_download_url: http://openresty.org/download/ngx_openresty-
+openresty_version: 1.9.15.1
+openresty_download_url: https://openresty.org/download/openresty-
 with_luajit: true
 with_dav: true
 with_flv: true
@@ -19,6 +18,10 @@ with_sha1: "/usr/include/openssl"
 with_md5: "/usr/include/openssl"
 with_mail: true
 with_mail_ssl: true
-with_stub_status: true
 with_secure_link: true
-with_sub: true
+with_pcre_jit: true
+with_debug: true
+with_auth_request: true
+with_addition: true
+with_gunzip: true
+with_postgres: true

@@ -23,6 +23,12 @@ mkdir /var/lib/nginx
 {% if with_secure_link %} --with-http_secure_link_module {% endif %}
 {% if with_sha1 %} --with-sha1={{ with_sha1 }} {% endif %}
 {% if with_md5 %} --with-md5={{ with_md5 }} {% endif %}
+{% if with_pcre_jit %} --with-pcre-jit {% endif %}
+{% if with_debug %} --with-debug {% endif %}
+{% if with_auth_request %} --with-http_auth_request_module {% endif %}
+{% if with_addition %} --with-http_addition_module {% endif %}
+{% if with_gunzip %} --with-http_gunzip_module {% endif %}
+{% if with_postgres %} --with-http_postgres_module {% endif %}
 --http-client-body-temp-path=/var/lib/nginx/body \
 --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
 --http-log-path=/var/log/nginx/access.log \
