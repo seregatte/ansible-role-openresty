@@ -9,6 +9,7 @@
 - name: Check if openresty already installed...
   shell: nginx -v
   register: nginx_ver
+  ignore_errors: yes
 
 - name: Update apt
   sudo: yes
@@ -58,11 +59,11 @@
   command: chdir=/tmp/openresty-{{ openresty_version }} make install
   when: nginx_ver.stderr.find(openresty_version) == -1
 
-- name: Service command
-  template: src=service.j2 dest=/etc/init.d/nginx owner=root group=root mode=0777
-  when: nginx_ver.stderr.find(openresty_version) == -1
-
-- name: Putting service in start up
-  command: update-rc.d nginx defaults
-  notify: restart nginx
-  when: nginx_ver.stderr.find(openresty_version) == -1
+- name: Systemd service file
+  template:
+    src: openresty.j2
+    dest: /lib/systemd/system/openresty.service
+    owner: root
+    group: root
+    mode: 0777
+#  when: nginx_ver.stderr.find(openresty_version) == -1
