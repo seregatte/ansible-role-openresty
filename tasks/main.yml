@@ -7,7 +7,7 @@
 
 # meta_end_play in 2.2 gist.github.com/jimi-c/c45b225e101fe673e42ffb719f259fbd
 - name: Check if openresty already installed...
-  shell: nginx -v
+  shell: /usr/local/openresty/bin/openresty -v
   register: nginx_ver
   ignore_errors: yes
 
@@ -59,14 +59,19 @@
   command: chdir=/tmp/openresty-{{ openresty_version }} make install
   when: nginx_ver.stderr.find(openresty_version) == -1
 
+- find:
+    paths: /usr/local/openresty/bin
+    follow: yes
+    recurse: no
+  register: openresty_bins
+
 - file:
-    src: "{{ item }}"
-    dest: "/usr/bin/{{ item | basename}}"
+    src: "{{ item.path }}"
+    dest: "/usr/bin/{{ item.path | basename}}"
     state: link
     owner: root
     mode: 0755
-  with_fileglob:
-  - "/usr/local/openresty/bin/*"
+  with_items: "{{ openresty_bins.files }}"
   
 - name: Systemd service file
   template:
