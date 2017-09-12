@@ -59,6 +59,15 @@
   command: chdir=/tmp/openresty-{{ openresty_version }} make install
   when: nginx_ver.stderr.find(openresty_version) == -1
 
+- file:
+    src: "{{ item }}"
+    dest: "/usr/bin/{{ item | basename}}"
+    state: link
+    owner: root
+    mode: 0755
+  with_fileglob:
+  - "/usr/local/openresty/bin/*"
+  
 - name: Systemd service file
   template:
     src: openresty.j2
@@ -66,4 +75,4 @@
     owner: root
     group: root
     mode: 0777
-#  when: nginx_ver.stderr.find(openresty_version) == -1
+  when: nginx_ver.stderr.find(openresty_version) == -1
