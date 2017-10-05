@@ -9,6 +9,7 @@
 - name: Check if openresty already installed...
   shell: nginx -v
   register: nginx_ver
+  failed_when: False
 
 - name: Update apt
   sudo: yes
