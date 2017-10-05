@@ -37,11 +37,11 @@
 
 - name: Download Openresty source
   get_url: url={{ openresty_download_url }}{{ openresty_version }}.tar.gz dest=/tmp/openresty.tar.gz mode=0440
-  when: resty_tar.stat.exists == False or nginx_ver.stderr.find(openresty_version) == -1
+  when: nginx_ver.stderr.find(openresty_version) == -1 and resty_tar.stat.exists == False
 
 - name: Extract Openresty tarball
   unarchive: src=/tmp/openresty.tar.gz dest=/tmp/ copy=no
-  when: resty_tar.stat.exists == False or nginx_ver.stderr.find(openresty_version) == -1
+  when: nginx_ver.stderr.find(openresty_version) == -1 and resty_tar.stat.exists == False
 
 - name: Build configure command
   template: src=configure_command.j2 dest=/tmp/openresty-{{ openresty_version }}/ansible_build.sh mode=0777
