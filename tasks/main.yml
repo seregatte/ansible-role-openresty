@@ -7,7 +7,7 @@
 
 # meta_end_play in 2.2 gist.github.com/jimi-c/c45b225e101fe673e42ffb719f259fbd
 - name: Check if openresty already installed...
-  shell: nginx -v
+  shell: /usr/local/openresty/bin/openresty -v
   register: nginx_ver
   ignore_errors: yes
 
@@ -36,12 +36,12 @@
   when: nginx_ver.stderr.find(openresty_version) == -1
 
 - name: Download Openresty source
-  get_url: url={{ openresty_download_url }}{{ openresty_version }}.tar.gz dest=/tmp/openresty.tar.gz mode=0440
-  when: resty_tar.stat.exists == False or nginx_ver.stderr.find(openresty_version) == -1
+  get_url: url={{ openresty_download_url }}{{ openresty_version }}.tar.gz dest=/tmp/openresty-{{ openresty_version }}.tar.gz mode=0440
+  when: nginx_ver.stderr.find(openresty_version) == -1 and resty_tar.stat.exists == False
 
 - name: Extract Openresty tarball
-  unarchive: src=/tmp/openresty.tar.gz dest=/tmp/ copy=no
-  when: resty_tar.stat.exists == False or nginx_ver.stderr.find(openresty_version) == -1
+  unarchive: src=/tmp/openresty-{{ openresty_version }}.tar.gz dest=/tmp/ copy=no
+  when: nginx_ver.stderr.find(openresty_version) == -1 and resty_tar.stat.exists == False
 
 - name: Build configure command
   template: src=configure_command.j2 dest=/tmp/openresty-{{ openresty_version }}/ansible_build.sh mode=0777
@@ -59,11 +59,25 @@
   command: chdir=/tmp/openresty-{{ openresty_version }} make install
   when: nginx_ver.stderr.find(openresty_version) == -1
 
+- find:
+    paths: /usr/local/openresty/bin
+    follow: yes
+    recurse: no
+  register: openresty_bins
+
+- file:
+    src: "{{ item.path }}"
+    dest: "/usr/bin/{{ item.path | basename}}"
+    state: link
+    owner: root
+    mode: 0755
+  with_items: "{{ openresty_bins.files }}"
+  
 - name: Systemd service file
   template:
     src: openresty.j2
     dest: /lib/systemd/system/openresty.service
     owner: root
     group: root
-    mode: 0777
-#  when: nginx_ver.stderr.find(openresty_version) == -1
+    mode: 0644
+  when: nginx_ver.stderr.find(openresty_version) == -1
