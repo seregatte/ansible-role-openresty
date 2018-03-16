@@ -3,6 +3,7 @@
   sudo: True
 
   vars:
+    openresty_download_url: https://openresty.org/download/openresty-
     openresty_version: 1.7.7.2
     with_luajit: true
     with_dav: true
