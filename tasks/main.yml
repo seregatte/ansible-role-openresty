@@ -45,7 +45,7 @@
 
     - name: Install required packages to compile OpenResy from source
       yum:
-        name: {{ item }}
+        name: "{{ item }}"
         with_items:
           - pcre-devel
           - openssl-devel
