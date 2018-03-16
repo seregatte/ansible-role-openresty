@@ -11,8 +11,8 @@
   register: nginx_ver
   ignore_errors: yes
 
-- name: Install Ubuntu Dependencies
-  block:
+#- name: Install Ubuntu Dependencies
+- block:
     - name: Update apt
       sudo: yes
       apt: update_cache=yes
@@ -36,8 +36,8 @@
         - libxslt1-dev    #Optional
   when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 14.04 and nginx_ver.stderr.find(openresty_version) == -1
 
-- name: Intall CentOS Dependencies
-  block:
+#- name: Intall CentOS Dependencies
+- block:
     - name: Update yum
       yum:
         name: '*'
@@ -79,19 +79,25 @@
   command: chdir=/tmp/openresty-{{ openresty_version }} make install
   when: nginx_ver.stderr.find(openresty_version) == -1
 
-- find:
+- name: register openresty bin files
+  find:
     paths: /usr/local/openresty/bin
     follow: yes
     recurse: no
   register: openresty_bins
+  when: nginx_ver.stderr.find(openresty_version) == -1
 
-- file:
+
+- name: link openresty bin files
+  file:
     src: "{{ item.path }}"
     dest: "/usr/bin/{{ item.path | basename}}"
     state: link
     owner: root
     mode: 0755
   with_items: "{{ openresty_bins.files }}"
+  ignore_errors: yes
+  when: nginx_ver.stderr.find(openresty_version) == -1
 
 - name: Systemd service file
   template:
