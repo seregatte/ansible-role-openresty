@@ -47,6 +47,7 @@
       yum:
         name: "{{ item }}"
         with_items:
+          - readline-devel
           - pcre-devel
           - openssl-devel
           - gcc
