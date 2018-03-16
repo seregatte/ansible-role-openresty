@@ -51,6 +51,7 @@
           - openssl-devel
           - gcc
           - curl
+          - perl
   when: ansible_distribution == "CentOS" and ansible_distribution_version|int >= 7.4 and nginx_ver.stderr.find(openresty_version) == -1
 
 - name: Download Openresty source
