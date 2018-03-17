@@ -12,7 +12,7 @@
   ignore_errors: yes
 
 - name: Install Ubuntu Dependencies
-- block:
+  block:
     - name: Update apt
       sudo: yes
       apt: update_cache=yes
@@ -38,7 +38,7 @@
   when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 14.04 and nginx_ver.stderr.find(openresty_version) == -1
 
 - name: Intall CentOS Dependencies
-- block:
+  block:
     - name: Update yum
       yum:
         name: '*'
