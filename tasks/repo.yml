@@ -1,0 +1,50 @@
+---
+  # Install OpenResty from the official repository
+
+- name: CentOS OpenResty Installation
+  block:
+    # https://openresty.org/package/centos/openresty.repo
+    - name: Add OpenResty Repository
+      yum_repository:
+        name: openresty
+        description: Official OpenResty Open Source Repository for CentOS
+        baseurl: https://openresty.org/package/centos/$releasever/$basearch
+        skip_if_unavailable: no
+        gpgcheck: yes
+        repo_gpgcheck: yes
+        gpgkey: https://openresty.org/package/pubkey.gpg
+        enabled: yes
+        # enabled_metadata=1
+
+    - name: Install OpenResty and Resty-CLI
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - openresty
+        - openresty-resty
+
+  when: ansible_distribution == "CentOS" and ansible_distribution_version|int >= 7.4
+
+- name: Ubuntu OpenResty Installation
+  block:
+    - name: Install OpenResty repository
+      apt_repository:
+        repo: http://openresty.org/package/ubuntu main
+        state: present
+
+    - name: Install OpenResty and Resty-CLI
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - openresty
+        - openresty-resty
+
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 14.04
+
+- name: Export OpenResty path
+  command: "{{ item }}"
+  with_items:
+    - PATH=/usr/local/openresty/nginx/sbin:$PATH
+    - export PATH
