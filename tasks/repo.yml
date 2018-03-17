@@ -24,13 +24,13 @@
         - openresty
         - openresty-resty
 
-  when: ansible_distribution == "CentOS" and ansible_distribution_version|int >= 7.4
+  when: ansible_distribution == "CentOS"
 
 - name: Ubuntu OpenResty Installation
   block:
     - name: Install OpenResty repository
       apt_repository:
-        repo: http://openresty.org/package/ubuntu main
+        repo: http://openresty.org/package/ubuntu $(lsb_release -sc) main
         state: present
 
     - name: Install OpenResty and Resty-CLI
