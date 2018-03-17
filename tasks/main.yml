@@ -8,3 +8,30 @@
 - name: Install form repo
   import_tasks: repo.yml
   when: openresty_install_from_source == false
+
+- name: copy nginx.conf
+  template:
+    src: nginx.conf
+    dest: /usr/local/openresty/nginx/conf/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy default.conf
+  template:
+    src: default.conf
+    dest: /usr/local/openresty/nginx/sites/default.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: make directory for default site
+  file:
+    path: /usr/local/openresty/nginx/html/default
+    state: directory
+
+- name: copy index.html
+  template:
+    src: index.html
+    path: /usr/local/openresty/nginx/html/default/
+  notify: restart openresty

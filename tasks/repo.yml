@@ -50,3 +50,11 @@
         - openresty-resty
 
   when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 14.04
+
+- name: Copy Systemd service file
+  template:
+    src: openresty.j2
+    dest: /lib/systemd/system/openresty.service
+    owner: root
+    group: root
+    mode: 0644
