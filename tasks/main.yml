@@ -3,8 +3,8 @@
 
 - name: Compile from source
   import_tasks: source.yml
-  when: openresty_install_from == source
+  when: openresty_install_from_source == true
 
 - name: Install form repo
   import_tasks: repo.yml
-  when: openresty_install_from == repo
+  when: openresty_install_from_source == false
