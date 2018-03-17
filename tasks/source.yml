@@ -53,7 +53,7 @@
           - openssl-devel
           - gcc
           - curl
-          - @Development Tools
+          - '@Development Tools'
 
   when: ansible_distribution == "CentOS" and ansible_distribution_version|int >= 7.4 and nginx_ver.stderr.find(openresty_version) == -1
 
