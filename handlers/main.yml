@@ -1,4 +1,15 @@
 ---
+- name: enable openresty
+  service:
+    name: openresty
+    enabled: yes
+  notify: start openresty
+
+- name: start openresty
+  service:
+    name: openresty
+    state: started
+
 - name: restart openresty
   service:
     name: openresty

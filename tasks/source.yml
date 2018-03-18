@@ -13,9 +13,10 @@
 
 - name: Install Ubuntu Dependencies
   block:
-    - name: Update apt
-      sudo: yes
-      apt: update_cache=yes
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      become: yes
 
     - name: Install required packages to compile OpenResty from source
       apt: name={{ item }}

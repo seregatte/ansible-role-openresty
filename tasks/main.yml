@@ -10,6 +10,8 @@
   import_tasks: repo.yml
   when: openresty_install_from_source == false
 
+  ##### Post Installation Tasks #####
+
 - name: copy systemd service file
   template:
     src: openresty.service
@@ -24,9 +26,6 @@
   template:
     src: nginx.conf
     dest: /usr/local/openresty/nginx/conf/nginx.conf
-    #owner: root
-    #group: root
-    #mode: 0644
 
 - name: make log directory
   file:
@@ -42,9 +41,6 @@
   template:
     src: default.conf
     dest: /usr/local/openresty/nginx/sites/default.conf
-    #owner: root
-    #group: root
-    #Smode: 0644
 
 - name: make directory for default site
   file:
@@ -55,4 +51,4 @@
   template:
     src: index.html
     dest: /usr/local/openresty/nginx/html/default/
-  notify: restart openresty
+  notify: enable openresty
