@@ -83,7 +83,7 @@
       command: chdir=/tmp/openresty-{{ openresty_version }} ./ansible_build.sh
 
     - name: Compile Openresty
-      command: chdir=/tmp/openresty-{{ openresty_version }} make - j{{ resty_compile_threads }}
+      command: chdir=/tmp/openresty-{{ openresty_version }} make -j{{ resty_compile_threads }}
 
     - name: Install Openresty
       command: chdir=/tmp/openresty-{{ openresty_version }} make install
