@@ -36,7 +36,7 @@
         - libgd2-xpm-dev  #Optional
         - libxslt1-dev    #Optional
 
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 14.04 and nginx_ver.stderr.find(openresty_version) == -1
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 16.04 and nginx_ver.stderr.find(openresty_version) == -1
 
 - name: Intall CentOS Dependencies
   block:
@@ -49,12 +49,14 @@
       yum:
         name: "{{ item }}"
         with_items:
+          - '@Development Tools'
           - readline-devel
           - pcre-devel
           - openssl-devel
           - gcc
           - curl
-          - '@Development Tools'
+          - postgresql-libs
+          - perl
 
   when: ansible_distribution == "CentOS" and ansible_distribution_version|int >= 7.4 and nginx_ver.stderr.find(openresty_version) == -1
 
