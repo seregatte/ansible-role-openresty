@@ -25,10 +25,9 @@ with_gunzip: true
 with_postgres: true
 with_http2: true
 with_file_aio: false
-without_http-uwsgi: false
-without_http-scgi: false
+without_http_uwsgi: false
+without_http_scgi: false
 without_http_coolkit: false
-without_http_empty_gif_module: false
 without_http_empty_gif_module: false
 without_mail_pop3_module: false
 without_mail_imap_module: false

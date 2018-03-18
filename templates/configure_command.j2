@@ -26,13 +26,13 @@ mkdir /var/lib/nginx
 {% if with_postgres %} --with-http_postgres_module {% endif %}
 {% if with_http2 %} --with-http_v2_module {% endif %}
 {% if with_file_aio %} --with-file-aio {% endif %}
-{% if without_http-uwsgi %}
+{% if without_http_uwsgi %}
   --without-http_uwsgi_module
 {% else %}
   --http-uwsgi-temp-path=/var/lib/nginx/uwsgi
 {% endif %}
 
-{% if without_http-scgi %}
+{% if without_http_scgi %}
   --without-http_scgi_module
 {% else %}
   --http-scgi-temp-path=/var/lib/nginx/scgi
