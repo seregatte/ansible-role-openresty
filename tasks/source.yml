@@ -49,17 +49,18 @@
       yum:
         name: "{{ item }}"
         state: latest
-        with_items:
-          - readline-devel
-          - pcre-devel
-          - openssl-devel
-          - gcc
-          - curl
-          - postgresql-libs
-          - perl
+      with_items:
+        - "@Development tools"
+        - readline-devel
+        - pcre-devel
+        - openssl-devel
+        - gcc
+        - curl
+        - postgresql-libs
+        - perl
 
-    - name: Install Development Tools package group
-      command: yum groupinstall "Development tools"
+    #- name: Install Development Tools package group
+    #  command: yum groupinstall "Development tools"
 
   when: ansible_distribution == "CentOS" and nginx_ver.stderr.find(openresty_version) == -1
 
