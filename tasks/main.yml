@@ -4,11 +4,11 @@
 
 - name: Compile from source
   import_tasks: source.yml
-  when: openresty_install_from_source == true
+  when: resty_install_from_source == true
 
 - name: Install form repo
   import_tasks: repo.yml
-  when: openresty_install_from_source == false
+  when: resty_install_from_source == false
 
   ##### Post Installation Tasks #####
 
