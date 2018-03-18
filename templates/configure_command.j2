@@ -1,9 +1,6 @@
 #!/bin/bash
 mkdir /var/lib/nginx
-./configure \
---pid-path=/var/run/nginx.pid \
---lock-path=/var/lock/nginx.lock \
---error-log-path=/var/log/nginx/error.log \
+./configure -j{{ resty_compile_threads }} \
 {% if with_luajit %} --with-luajit {% endif %}
 {% if with_dav %} --with-http_dav_module {% endif %}
 {% if with_flv %} --with-http_flv_module {% endif %}
@@ -33,4 +30,3 @@ mkdir /var/lib/nginx
 --http-proxy-temp-path=/var/lib/nginx/proxy \
 --http-scgi-temp-path=/var/lib/nginx/scgi \
 --http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
--j{{ resty_compile_threads }}
