@@ -93,6 +93,7 @@ Vagrant.configure("2") do |config|
     centos.vm.provision "shell", inline: <<-SHELL
     git clone https://github.com/HauptJ/ansible-role-openresty.git
     pushd ansible-role-openresty/
+    git checkout temp
     mkdir -p roles/open_resty_role/
     cp -r tasks/ roles/open_resty_role/
     cp -r meta/ roles/open_resty_role/
@@ -135,6 +136,7 @@ Vagrant.configure("2") do |config|
     echo 'localhost              ansible_connection=local              ansible_user=root' >> /etc/ansible/hosts
     git clone https://github.com/HauptJ/ansible-role-openresty.git
     pushd ansible-role-openresty/
+    git checkout temp
     mkdir -p roles/open_resty_role/
     cp -r tasks/ roles/open_resty_role/
     cp -r meta/ roles/open_resty_role/
