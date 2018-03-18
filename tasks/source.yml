@@ -1,0 +1,114 @@
+---
+- stat: path=/tmp/openresty.tar.gz
+  register: resty_tar
+
+- stat: path=/usr/sbin/nginx
+  register: resty_exe
+
+# meta_end_play in 2.2 gist.github.com/jimi-c/c45b225e101fe673e42ffb719f259fbd
+- name: Check if openresty already installed...
+  shell: /usr/local/openresty/bin/openresty -v
+  register: nginx_ver
+  ignore_errors: yes
+
+- name: Install Ubuntu Dependencies
+  block:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: Install required packages to compile OpenResty from source
+      apt: name={{ item }}
+      with_items:
+        - build-essential
+        - libreadline-dev
+        - make
+        - libncurses5-dev
+        - libpcre3-dev
+        - libssl-dev
+        - perl
+        - libxml2-dev     #Optional
+        - libxslt-dev     #Optional
+        - libgd-dev       #Optional
+        - libgeoip-dev    #Optional
+        - libpq-dev       #Optional
+        - libgd2-xpm-dev  #Optional
+        - libxslt1-dev    #Optional
+
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 16.04 and nginx_ver.stderr.find(openresty_version) == -1
+
+- name: Intall CentOS Dependencies
+  block:
+    - name: Update yum
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install required packages to compile OpenResy from source
+      yum:
+        name: "{{ item }}"
+        with_items:
+          - '@Development Tools'
+          - readline-devel
+          - pcre-devel
+          - openssl-devel
+          - gcc
+          - curl
+          - postgresql-libs
+          - perl
+
+  when: ansible_distribution == "CentOS" and ansible_distribution_version|int >= 7.4 and nginx_ver.stderr.find(openresty_version) == -1
+
+- name: Download Openresty source
+  get_url: url={{ openresty_download_url }}{{ openresty_version }}.tar.gz dest=/tmp/openresty-{{ openresty_version }}.tar.gz mode=0440
+  when: nginx_ver.stderr.find(openresty_version) == -1 and resty_tar.stat.exists == False
+
+- name: Extract Openresty tarball
+  unarchive: src=/tmp/openresty-{{ openresty_version }}.tar.gz dest=/tmp/ copy=no
+  when: nginx_ver.stderr.find(openresty_version) == -1 and resty_tar.stat.exists == False
+
+- name: Build configure command
+  template: src=configure_command.j2 dest=/tmp/openresty-{{ openresty_version }}/ansible_build.sh mode=0777
+  when: nginx_ver.stderr.find(openresty_version) == -1
+
+- name: Configure Openresty
+  command: chdir=/tmp/openresty-{{ openresty_version }} ./ansible_build.sh
+  when: nginx_ver.stderr.find(openresty_version) == -1
+
+- name: Compile Openresty
+  command: chdir=/tmp/openresty-{{ openresty_version }} make
+  when: nginx_ver.stderr.find(openresty_version) == -1
+
+- name: Install Openresty
+  command: chdir=/tmp/openresty-{{ openresty_version }} make install
+  when: nginx_ver.stderr.find(openresty_version) == -1
+
+- name: register openresty bin files
+  find:
+    paths: /usr/local/openresty/bin
+    follow: yes
+    recurse: no
+  register: openresty_bins
+  when: nginx_ver.stderr.find(openresty_version) == -1
+
+
+- name: link openresty bin files
+  file:
+    src: "{{ item.path }}"
+    dest: "/usr/bin/{{ item.path | basename}}"
+    state: link
+    owner: root
+    mode: 0755
+  with_items: "{{ openresty_bins.files }}"
+  ignore_errors: yes
+  when: nginx_ver.stderr.find(openresty_version) == -1
+
+#- name: Systemd service file
+#  template:
+#    src: openresty.j2
+#    dest: /etc/systemd/system/openresty.service
+#    owner: root
+#    group: root
+#    mode: 0644
+  when: nginx_ver.stderr.find(openresty_version) == -1

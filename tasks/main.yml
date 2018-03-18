@@ -1,83 +1,59 @@
 ---
-- stat: path=/tmp/openresty.tar.gz
-  register: resty_tar
+  # Driver for OpenResty Installation
+  # Ref: https://www.digitalocean.com/community/tutorials/how-to-use-the-openresty-web-framework-for-nginx-on-ubuntu-16-04
 
-- stat: path=/usr/sbin/nginx
-  register: resty_exe
+- name: Compile from source
+  import_tasks: source.yml
+  when: openresty_install_from_source == true
 
-# meta_end_play in 2.2 gist.github.com/jimi-c/c45b225e101fe673e42ffb719f259fbd
-- name: Check if openresty already installed...
-  shell: /usr/local/openresty/bin/openresty -v
-  register: nginx_ver
-  ignore_errors: yes
+- name: Install form repo
+  import_tasks: repo.yml
+  when: openresty_install_from_source == false
 
-- name: Update apt
-  sudo: yes
-  apt: update_cache=yes
-  when: nginx_ver.stderr.find(openresty_version) == -1
+  ##### Post Installation Tasks #####
 
-- name: Install required packages to compile Openresty from source
-  apt: name={{ item }}
-  with_items:
-    - build-essential
-    - libreadline-dev
-    - make
-    - libncurses5-dev
-    - libpcre3-dev
-    - libssl-dev
-    - perl
-    - libxml2-dev     #Optional
-    - libxslt-dev     #Optional
-    - libgd-dev       #Optional
-    - libgeoip-dev    #Optional
-    - libpq-dev       #Optional
-    - libgd2-xpm-dev  #Optional
-    - libxslt1-dev    #Optional
-  when: nginx_ver.stderr.find(openresty_version) == -1
-
-- name: Download Openresty source
-  get_url: url={{ openresty_download_url }}{{ openresty_version }}.tar.gz dest=/tmp/openresty-{{ openresty_version }}.tar.gz mode=0440
-  when: nginx_ver.stderr.find(openresty_version) == -1 and resty_tar.stat.exists == False
-
-- name: Extract Openresty tarball
-  unarchive: src=/tmp/openresty-{{ openresty_version }}.tar.gz dest=/tmp/ copy=no
-  when: nginx_ver.stderr.find(openresty_version) == -1 and resty_tar.stat.exists == False
-
-- name: Build configure command
-  template: src=configure_command.j2 dest=/tmp/openresty-{{ openresty_version }}/ansible_build.sh mode=0777
-  when: nginx_ver.stderr.find(openresty_version) == -1
-
-- name: Configure Openresty
-  command: chdir=/tmp/openresty-{{ openresty_version }} ./ansible_build.sh
-  when: nginx_ver.stderr.find(openresty_version) == -1
-
-- name: Compile Openresty
-  command: chdir=/tmp/openresty-{{ openresty_version }} make
-  when: nginx_ver.stderr.find(openresty_version) == -1
-
-- name: Install Openresty
-  command: chdir=/tmp/openresty-{{ openresty_version }} make install
-  when: nginx_ver.stderr.find(openresty_version) == -1
-
-- find:
-    paths: /usr/local/openresty/bin
-    follow: yes
-    recurse: no
-  register: openresty_bins
-
-- file:
-    src: "{{ item.path }}"
-    dest: "/usr/bin/{{ item.path | basename}}"
-    state: link
-    owner: root
-    mode: 0755
-  with_items: "{{ openresty_bins.files }}"
-  
-- name: Systemd service file
+- name: copy systemd service file
   template:
-    src: openresty.j2
-    dest: /lib/systemd/system/openresty.service
-    owner: root
-    group: root
-    mode: 0644
-  when: nginx_ver.stderr.find(openresty_version) == -1
+    src: openresty.service
+    dest: /etc/systemd/system/openresty.service
+
+- name: create web service user {{ resty_web_user }}
+  user:
+    name: "{{ resty_web_user }}"
+    system: yes
+
+- name: copy nginx.conf
+  template:
+    src: nginx.conf
+    dest: /usr/local/openresty/nginx/conf/nginx.conf
+
+- name: make log directory
+  file:
+    path: /var/log/openresty/
+    state: directory
+
+- name: make sites directory
+  file:
+    path: /usr/local/openresty/nginx/sites
+    state: directory
+
+- name: copy default.conf
+  template:
+    src: default.conf
+    dest: /usr/local/openresty/nginx/sites/default.conf
+
+- name: make directory for default site
+  file:
+    path: /usr/local/openresty/nginx/html/default
+    state: directory
+
+- name: copy index.html
+  template:
+    src: index.html
+    dest: /usr/local/openresty/nginx/html/default/
+
+- name: enable openresty
+  service:
+    name: openresty
+    enabled: yes
+  notify: restart openresty
