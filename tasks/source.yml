@@ -36,7 +36,7 @@
         - libgd2-xpm-dev  #Optional
         - libxslt1-dev    #Optional
 
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 16.04 and nginx_ver.stderr.find(openresty_version) == -1
+  when: ansible_distribution == "Ubuntu" and nginx_ver.stderr.find(openresty_version) == -1
 
 - name: Intall CentOS Dependencies
   block:
@@ -45,11 +45,12 @@
         name: '*'
         state: latest
 
-    - name: Install required packages to compile OpenResy from source
+    - name: Install required packages to compile OpenResy from source - CentOS
       yum:
         name: "{{ item }}"
+        state: latest
         with_items:
-          - '@Development Tools'
+          - '@Development tools'
           - readline-devel
           - pcre-devel
           - openssl-devel
@@ -58,7 +59,20 @@
           - postgresql-libs
           - perl
 
-  when: ansible_distribution == "CentOS" and ansible_distribution_version|int >= 7.4 and nginx_ver.stderr.find(openresty_version) == -1
+    #- name: Install Development Tools package group
+    #  command: yum groupinstall "Development tools"
+
+  when: ansible_distribution == "CentOS" and nginx_ver.stderr.find(openresty_version) == -1
+
+#- name: Download PCRE source
+#  get_url:
+#    url: {{ pcre_download_url }}{{ pcre_ver }}.tar.gz
+#    dest: /tmp/pcre-{{ pcre_ver }}.tar.gz
+
+#- name: Download OpenSSL source
+#  get_url:
+#    url: {{ openssl_download_url }}-{{ openssl_ver }}.tar.gz
+#    dest: /tmp/openssl-{{ openssl_ver }}.tar.gz
 
 - name: Download Openresty source
   get_url: url={{ openresty_download_url }}{{ openresty_version }}.tar.gz dest=/tmp/openresty-{{ openresty_version }}.tar.gz mode=0440

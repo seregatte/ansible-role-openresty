@@ -2,7 +2,11 @@
 # defaults file for nginx
 openresty_install_from_source: true
 openresty_version: 1.11.2.5
+pcre_ver: 8.41
+openssl_ver: 1.1.0g
+pcre_download_url: http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-
 openresty_download_url: https://openresty.org/download/openresty-
+openssl_download_url: https://ftp.openssl.org/source/openssl-
 with_luajit: true
 with_dav: true
 with_flv: true
