@@ -68,12 +68,14 @@
 
       when: ansible_distribution == "CentOS"
 
-    - name: Download Openresty source
-      get_url: url={{ openresty_download_url }}{{ openresty_version }}.tar.gz dest=/tmp/openresty-{{ openresty_version }}.tar.gz mode=0440
-      when: resty_tar.stat.exists == False
+    - name: OpenResty tarball does not exist
+      block:
+        - name: Download OpenResty source
+          get_url: url={{ openresty_download_url }}{{ openresty_version }}.tar.gz dest=/tmp/openresty-{{ openresty_version }}.tar.gz mode=0440
 
-    - name: Extract Openresty tarball
-      unarchive: src=/tmp/openresty-{{ openresty_version }}.tar.gz dest=/tmp/ copy=no
+        - name: Extract Openresty tarball
+          unarchive: src=/tmp/openresty-{{ openresty_version }}.tar.gz dest=/tmp/ copy=no
+
       when: resty_tar.stat.exists == False
 
     - name: Build configure command

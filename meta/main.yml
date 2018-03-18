@@ -1,16 +1,3 @@
 ---
-galaxy_info:
-  author: João Paulo Seregatte Costa
-  description: Configures and installs openresty
-  license: MIT
-  min_ansible_version: 1.2
-  platforms:
-  - name: Ubuntu
-    versions:
-    - all
-  categories:
-  - web
-  - development
-  - networking
-
+  
 dependencies: []

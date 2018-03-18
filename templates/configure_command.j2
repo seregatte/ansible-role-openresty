@@ -24,9 +24,41 @@ mkdir /var/lib/nginx
 {% if with_addition %} --with-http_addition_module {% endif %}
 {% if with_gunzip %} --with-http_gunzip_module {% endif %}
 {% if with_postgres %} --with-http_postgres_module {% endif %}
+{% if with_http2 %} --with-http_v2_module {% endif %}
+{% if with_file_aio %} --with-file-aio {% endif %}
+{% if without_http-uwsgi %}
+  --without-http_uwsgi_module
+{% else %}
+  --http-uwsgi-temp-path=/var/lib/nginx/uwsgi
+{% endif %}
+
+{% if without_http-scgi %}
+  --without-http_scgi_module
+{% else %}
+  --http-scgi-temp-path=/var/lib/nginx/scgi
+{% endif %}
+
+{% if without_http_coolkit %}
+  --without-http_coolkit_module
+{% endif %}
+
+{% if without_http_empty_gif_module %}
+  --without-http_empty_gif_module
+{% endif %}
+
+{% if without_mail_pop3_module %}
+  --without-mail_pop3_module
+{% endif %}
+
+{% if without_mail_imap_module %}
+  --without-mail_imap_module
+{% endif %}
+
+{% if without_mail_smtp_module %}
+  --without-mail_smtp_module
+{% endif %}
+
 --http-client-body-temp-path=/var/lib/nginx/body \
 --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
 --http-log-path=/var/log/nginx/access.log \
---http-proxy-temp-path=/var/lib/nginx/proxy \
---http-scgi-temp-path=/var/lib/nginx/scgi \
---http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
+--http-proxy-temp-path=/var/lib/nginx/proxy
