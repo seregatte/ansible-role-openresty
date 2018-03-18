@@ -101,11 +101,11 @@
   ignore_errors: yes
   when: nginx_ver.stderr.find(openresty_version) == -1
 
-- name: Systemd service file
-  template:
-    src: openresty.j2
-    dest: /lib/systemd/system/openresty.service
-    owner: root
-    group: root
-    mode: 0644
+#- name: Systemd service file
+#  template:
+#    src: openresty.j2
+#    dest: /etc/systemd/system/openresty.service
+#    owner: root
+#    group: root
+#    mode: 0644
   when: nginx_ver.stderr.find(openresty_version) == -1

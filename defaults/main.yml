@@ -26,3 +26,5 @@ with_auth_request: true
 with_addition: true
 with_gunzip: true
 with_postgres: true
+
+resty_web_user: www-data

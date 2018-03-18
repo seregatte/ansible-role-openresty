@@ -1,0 +1,29 @@
+# Stop dance for OpenResty
+# A modification of the Nginx systemd script
+# =======================
+#
+# ExecStop sends SIGSTOP (graceful stop) to the Nginx process.
+# If, after 5s (--retry QUIT/5) OpenResty is still running, systemd takes control
+# and sends SIGTERM (fast shutdown) to the main process.
+# After another 5s (TimeoutStopSec=5), and if OpenResty is alive, systemd sends
+# SIGKILL to all the remaining processes in the process group (KillMode=mixed).
+#
+# Nginx signals reference doc:
+# http://nginx.org/en/docs/control.html
+#
+[Unit]
+Description=A dynamic web platform based on Nginx and LuaJIT.
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/openresty.pid
+ExecStartPre=/usr/local/openresty/bin/openresty -t -q -g 'daemon on; master_process on;'
+ExecStart=/usr/local/openresty/bin/openresty -g 'daemon on; master_process on;'
+ExecReload=/usr/local/openresty/bin/openresty -g 'daemon on; master_process on;' -s reload
+ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/openresty.pid
+TimeoutStopSec=5
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target

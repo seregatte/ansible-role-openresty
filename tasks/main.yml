@@ -1,5 +1,6 @@
 ---
   # Driver for OpenResty Installation
+  # Ref: https://www.digitalocean.com/community/tutorials/how-to-use-the-openresty-web-framework-for-nginx-on-ubuntu-16-04
 
 - name: Compile from source
   import_tasks: source.yml
@@ -9,21 +10,41 @@
   import_tasks: repo.yml
   when: openresty_install_from_source == false
 
+- name: copy systemd service file
+  template:
+    src: openresty.service
+    dest: /etc/systemd/system/openresty.service
+
+- name: create web service user {{ resty_web_user }}
+  user:
+    name: "{{ resty_web_user }}"
+    system: yes
+
 - name: copy nginx.conf
   template:
     src: nginx.conf
     dest: /usr/local/openresty/nginx/conf/nginx.conf
-    owner: root
-    group: root
-    mode: 0644
+    #owner: root
+    #group: root
+    #mode: 0644
+
+- name: make log directory
+  file:
+    path: /var/log/openresty/
+    state: directory
+
+- name: make sites directory
+  file:
+    path: /usr/local/openresty/nginx/sites
+    state: directory
 
 - name: copy default.conf
   template:
     src: default.conf
     dest: /usr/local/openresty/nginx/sites/default.conf
-    owner: root
-    group: root
-    mode: 0644
+    #owner: root
+    #group: root
+    #Smode: 0644
 
 - name: make directory for default site
   file:
@@ -33,5 +54,5 @@
 - name: copy index.html
   template:
     src: index.html
-    path: /usr/local/openresty/nginx/html/default/
+    dest: /usr/local/openresty/nginx/html/default/
   notify: restart openresty
