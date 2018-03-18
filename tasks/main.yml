@@ -51,4 +51,9 @@
   template:
     src: index.html
     dest: /usr/local/openresty/nginx/html/default/
-  notify: enable openresty
+
+- name: enable openresty
+  service:
+    name: openresty
+    enabled: yes
+  notify: restart openresty

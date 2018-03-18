@@ -1,9 +1,4 @@
 ---
-- name: enable openresty
-  service:
-    name: openresty
-    enabled: yes
-  notify: start openresty
 
 - name: start openresty
   service:
