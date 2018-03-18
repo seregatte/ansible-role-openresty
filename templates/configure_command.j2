@@ -32,4 +32,5 @@ mkdir /var/lib/nginx
 --http-log-path=/var/log/nginx/access.log \
 --http-proxy-temp-path=/var/lib/nginx/proxy \
 --http-scgi-temp-path=/var/lib/nginx/scgi \
---http-uwsgi-temp-path=/var/lib/nginx/uwsgi
+--http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
+-j{{ resty_compile_threads }}

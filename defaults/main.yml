@@ -1,12 +1,7 @@
 ---
 # defaults file for nginx
-openresty_install_from_source: true
 openresty_version: 1.11.2.5
-pcre_ver: 8.41
-openssl_ver: 1.1.0g
-pcre_download_url: http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-
 openresty_download_url: https://openresty.org/download/openresty-
-openssl_download_url: https://ftp.openssl.org/source/openssl-
 with_luajit: true
 with_dav: true
 with_flv: true
@@ -19,8 +14,6 @@ with_ssl: true
 with_sub: true
 with_xslt: true
 with_ipv6: true
-with_sha1: "/usr/include/openssl"
-with_md5: "/usr/include/openssl"
 with_mail: true
 with_mail_ssl: true
 with_secure_link: true
@@ -31,4 +24,19 @@ with_addition: true
 with_gunzip: true
 with_postgres: true
 
+##### Compile from source or install from repo #####
+# set to false to install from repo
+resty_install_from_source: true
+
+##### Compile Threads #####
+resty_compile_threads: 2
+
+##### Display default web server page for testing #####
+resty_default_server: true
+
+##### NGINX Settings #####
 resty_web_user: www-data
+
+##### These modules are depreciated #####
+with_sha1: "/usr/include/openssl"
+with_md5: "/usr/include/openssl"
