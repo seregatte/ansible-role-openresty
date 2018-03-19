@@ -1,6 +1,8 @@
-# Openresty
+# OpenResty
 
-Configures and installs OpenResty
+Configures and installs [OpenResty NGINX](https://openresty.org/en/)
+
+[![Build Status](https://travis-ci.org/HauptJ/ansible-role-openresty.svg?branch=master)](https://travis-ci.org/HauptJ/ansible-role-openresty)
 
 ## Requirements
 
