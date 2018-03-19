@@ -47,15 +47,8 @@ Configures and installs OpenResty
 | with_gunzip 			| true									| Compile with gunzip module				|          
 | with_postgres 		| true									| Compile with PostgreSQL support		|
 | with_http2        | true                  | Compile with http2 support        |
-| with_file_aio     | false                 | Compile with file AIO             |
-| without_http-uwsgi| false                 | Do not compile with default http_uwsgi    |
-| without_http-scgi | false                 | Do not compile with default http-scgi     |
-| without_http_coolkit          | false     | Do not compile with default coolkit       |
-| without_http_empty_gif_module | false     | Do not compile with default http_empty_gif_module |
-| without_http_empty_gif_module | false     | Do not compile with default mail_pop3_module      |
-| without_mail_pop3_module      | false     | Do not compile with default mail_pop3_module      |
-| without_mail_imap_module      | false     | Do not compile with default mail_imap_module      |
-| without_mail_smtp_module      | false     | Do not compile with default mail_smtp_module      |
+| with_file_aio     | true                  | Compile with file AIO             |
+
 
 Dependencies
 ------------
