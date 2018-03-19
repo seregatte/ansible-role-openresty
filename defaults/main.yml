@@ -1,6 +1,5 @@
 ---
 # defaults file for nginx
-openresty_install_from_source: true
 openresty_version: 1.11.2.5
 openresty_download_url: https://openresty.org/download/openresty-
 with_luajit: true
@@ -15,8 +14,6 @@ with_ssl: true
 with_sub: true
 with_xslt: true
 with_ipv6: true
-with_sha1: "/usr/include/openssl"
-with_md5: "/usr/include/openssl"
 with_mail: true
 with_mail_ssl: true
 with_secure_link: true
@@ -26,5 +23,22 @@ with_auth_request: true
 with_addition: true
 with_gunzip: true
 with_postgres: true
+with_http2: true
+with_file_aio: true
 
+##### Compile from source or install from repo #####
+# set to false to install from repo
+resty_install_from_source: true
+
+##### Compile Threads #####
+resty_compile_threads: 2
+
+##### Display default web server page for testing #####
+resty_default_server: true
+
+##### NGINX Settings #####
 resty_web_user: www-data
+
+##### These modules are depreciated #####
+with_sha1: "/usr/include/openssl"
+with_md5: "/usr/include/openssl"

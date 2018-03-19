@@ -91,8 +91,10 @@ Vagrant.configure("2") do |config|
   	end
 
     centos.vm.provision "shell", inline: <<-SHELL
+    rm -r -f ansible-role-openresty/
     git clone https://github.com/HauptJ/ansible-role-openresty.git
     pushd ansible-role-openresty/
+    git checkout temp
     mkdir -p roles/open_resty_role/
     cp -r tasks/ roles/open_resty_role/
     cp -r meta/ roles/open_resty_role/
@@ -126,11 +128,17 @@ Vagrant.configure("2") do |config|
 
     ubuntu.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
-    sudo apt-get install -y ansible git
+    sudo apt-get install -y git
+    sudo apt-get install software-properties-common
+    sudo apt-add-repository ppa:ansible/ansible
+    sudo apt-get update
+    sudo apt-get install -y ansible
     echo '[local]' >> /etc/ansible/hosts
     echo 'localhost              ansible_connection=local              ansible_user=root' >> /etc/ansible/hosts
+    rm -r -f ansible-role-openresty/
     git clone https://github.com/HauptJ/ansible-role-openresty.git
     pushd ansible-role-openresty/
+    git checkout temp
     mkdir -p roles/open_resty_role/
     cp -r tasks/ roles/open_resty_role/
     cp -r meta/ roles/open_resty_role/
