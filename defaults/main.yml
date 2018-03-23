@@ -37,7 +37,7 @@ resty_compile_threads: 2
 resty_default_server: true
 
 ##### NGINX Settings #####
-resty_web_user: www-data
+resty_web_user: nginx
 
 ##### These modules are depreciated #####
 with_sha1: "/usr/include/openssl"

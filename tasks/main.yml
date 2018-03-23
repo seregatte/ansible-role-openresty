@@ -17,46 +17,25 @@
     src: openresty.service
     dest: /etc/systemd/system/openresty.service
 
-- name: Setup default server block for testing
-  block:
-    - name: create web service user {{ resty_web_user }}
-      user:
-        name: "{{ resty_web_user }}"
-        system: yes
-
-    - name: copy nginx.conf
-      template:
-        src: nginx.conf
-        dest: /usr/local/openresty/nginx/conf/nginx.conf
-
-    - name: make log directory
-      file:
-        path: /var/log/openresty/
-        state: directory
-
-    - name: make sites directory
-      file:
-        path: /usr/local/openresty/nginx/sites
-        state: directory
-
-    - name: copy default.conf
-      template:
-        src: default.conf
-        dest: /usr/local/openresty/nginx/sites/default.conf
-
-    - name: make directory for default site
-      file:
-        path: /usr/local/openresty/nginx/html/default
-        state: directory
-
-    - name: copy index.html
-      template:
-        src: index.html
-        dest: /usr/local/openresty/nginx/html/default/
+- name: configure default site for testing
+  import_tasks: default_site.yml
   when: resty_default_server == true
+
+- name: configure wordpress site
+  import_tasks: wordpress.yml
+  when: resty_default_server == false
 
 - name: enable openresty
   service:
     name: openresty
     enabled: yes
   notify: restart openresty
+  when: resty_default_server == true
+
+#- name: insert firewalld rule for nginx port {{ nginx_port }}
+#  firewalld:
+#    port: "{{ nginx_port }}/tcp"
+#    permanent: true
+#    state: enabled
+#    immediate: yes
+#  ignore_errors: yes

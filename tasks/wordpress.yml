@@ -1,0 +1,77 @@
+---
+  # OpenResty site configuration
+
+- name: make includes, sites-available, and sites-enabled directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /etc/nginx/includes
+    - /etc/nginx/sites-available
+    - /etc/nginx/sites-enabled
+
+- name: Copy nginx blacklist configuration
+  template:
+    src: blacklist.conf
+    dest: /etc/nginx/includes/blacklist.conf
+
+- name: Copy nginx cloudflare configuration
+  template:
+    src: cloudflare.conf
+    dest: /etc/nginx/includes/cloudflare.conf
+
+- name: Copy nginx mime.types configuration
+  template:
+    src: mime.types.conf
+    dest: /etc/nginx/includes/mime.types.conf
+
+- name: Copy nginx sites-enabled.conf
+  template:
+    src: sites-enabled.conf
+    dest: /etc/nginx/includes/sites-enabled.conf
+
+- name: Copy ssl configuration
+  template:
+    src: ssl.conf
+    dest: /etc/nginx/includes/ssl.conf
+
+- name: Copy virtualhost configuration
+  template:
+    src: virtualhost.conf
+    dest: /etc/nginx/sites-available/virtualhost.conf
+
+#- name: Link blacklist.conf to /etc/nginx/conf.d
+#  file:
+#    src: /etc/nginx/includes/blacklist.conf
+#    dest: /etc/nginx/conf.d/_.blacklist.conf
+#    state: link
+
+- name: Link cloudflare.conf to /etc/nginx/conf.d
+  file:
+    src: /etc/nginx/includes/cloudflare.conf
+    dest: /etc/nginx/conf.d/_.cloudflare.conf
+    state: link
+
+- name: Link mine.types.conf to /etc/mime.types.conf.d
+  file:
+    src: /etc/nginx/includes/mime.types.conf
+    dest: /etc/nginx/conf.d/_.mime.types.conf
+    state: link
+
+- name: Link sites-enabled.conf to /etc/nginx/conf.d
+  file:
+    src: /etc/nginx/includes/sites-enabled.conf
+    dest: /etc/nginx/conf.d/_.sites-enabled.conf
+    state: link
+
+- name: Link mime.types.conf to /etc/nginx.conf.d
+  file:
+    src: /etc/nginx/includes/mime.types.conf
+    dest: /etc/nginx/conf.d/_.mime.types.conf
+    state: link
+
+- name: link the virtual host using full pathnames for source and target!
+  file:
+    src: /etc/nginx/sites-available/virtualhost.conf
+    dest: /etc/nginx/sites-enabled/virtualhost.conf
+    state: link
