@@ -42,3 +42,8 @@ resty_web_user: nginx
 ##### These modules are depreciated #####
 with_sha1: "/usr/include/openssl"
 with_md5: "/usr/include/openssl"
+
+# TEST
+server_hostname: example.local
+SSL_self_signed: true
+test_wp_tasks: true

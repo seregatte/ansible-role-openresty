@@ -1,7 +1,7 @@
 ---
   # OpenResty site configuration
 
-- name: make includes, sites-available, and sites-enabled directories
+- name: make includes, sites-available, sites-enabled and /var/www/shared directories
   file:
     path: "{{ item }}"
     state: directory
@@ -9,6 +9,7 @@
     - /etc/nginx/includes
     - /etc/nginx/sites-available
     - /etc/nginx/sites-enabled
+    - /var/www/shared
 
 - name: Copy nginx blacklist configuration
   template:
@@ -75,3 +76,18 @@
     src: /etc/nginx/sites-available/virtualhost.conf
     dest: /etc/nginx/sites-enabled/virtualhost.conf
     state: link
+
+- name: test wordpress tasks
+  block:
+    - name: copy index.html
+      template:
+        src: index.html
+        dest: /var/www/shared
+
+    - name: copy info.php
+      template:
+        src: info.php
+        dest: /var/www/shared
+      notify: restart openresty
+
+  when: test_wp_tasks == true
