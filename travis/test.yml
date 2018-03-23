@@ -1,0 +1,7 @@
+---
+  # Modified from source: https://github.com/drhelius/travis-ansible-demo/blob/master/travis/test.yml
+- hosts: all
+  become: yes
+
+  roles:
+    - open_resty_role

@@ -1,0 +1,60 @@
+---
+  # Install OpenResty from the official repository
+
+- name: CentOS OpenResty Installation
+  block:
+    # https://openresty.org/package/centos/openresty.repo
+    - name: Add OpenResty Repository
+      yum_repository:
+        name: openresty
+        description: Official OpenResty Open Source Repository for CentOS
+        baseurl: https://openresty.org/package/centos/$releasever/$basearch
+        skip_if_unavailable: no
+        gpgcheck: yes
+        repo_gpgcheck: yes
+        gpgkey: https://openresty.org/package/pubkey.gpg
+        enabled: yes
+        # enabled_metadata=1
+
+    - name: Install OpenResty and Resty-CLI
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - openresty
+        - openresty-resty
+
+  when: ansible_distribution == "CentOS"
+
+- name: Ubuntu OpenResty Installation
+  block:
+    # broken
+    #- name: Install OpenResty repository
+    #  apt_repository:
+    #    repo: http://openresty.org/package/ubuntu $(lsb_release -sc) main
+    #    state: present
+    - name: Install OpenResty Repository
+      shell: "{{ item }}"
+      with_items:
+        - wget -qO - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
+        - sudo apt-get -y install software-properties-common
+        - sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main"
+        - sudo apt-get update
+
+    - name: Install OpenResty and Resty-CLI
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - openresty
+        - openresty-resty
+
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 16.04
+
+#- name: Copy Systemd service file
+#  template:
+#    src: openresty.j2
+#    dest: /etc/systemd/system/openresty.service
+#    owner: root
+#    group: root
+#    mode: 0644
