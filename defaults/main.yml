@@ -50,7 +50,8 @@ test_wp_tasks: true
 
 ##### wp.conf #####
 nginx_port: 443
-# nginx_ipv6:
+# STUB IPv6
+nginx_ipv6:  2607:5300:201:2100::5:1111
 
 htpasswd_user: test
 htpasswd_pass: pass
