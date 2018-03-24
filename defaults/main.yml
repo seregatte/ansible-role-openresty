@@ -47,3 +47,10 @@ with_md5: "/usr/include/openssl"
 server_hostname: example.local
 SSL_self_signed: true
 test_wp_tasks: true
+
+##### wp.conf #####
+nginx_port: 443
+# nginx_ipv6:
+
+htpasswd_user: test
+htpasswd_pass: pass
