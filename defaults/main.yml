@@ -35,6 +35,7 @@ resty_compile_threads: 2
 
 ##### Display default web server page for testing #####
 resty_default_server: false
+resty_install_wp: true
 
 ##### NGINX Settings #####
 resty_web_user: nginx
@@ -43,9 +44,7 @@ resty_web_user: nginx
 with_sha1: "/usr/include/openssl"
 with_md5: "/usr/include/openssl"
 
-# TEST
 server_hostname: example.local
-SSL_self_signed: true
 test_wp_tasks: true
 
 ##### wp.conf #####
@@ -58,3 +57,6 @@ htpasswd_pass: pass
 
 # disable here for Travis CI testing
 firewalld_installed: false
+
+resty_default_web_dir: /usr/local/openresty/nginx/html/default/
+resty_sites_dir: /usr/local/openresty/nginx/sites/

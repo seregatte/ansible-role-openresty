@@ -1,41 +1,44 @@
 ---
   # Configure default site for testing
 
-- name: Setup default server block for testing
-  block:
-    - name: create web service user {{ resty_web_user }}
-      user:
-        name: "{{ resty_web_user }}"
-        system: yes
+- name: create web service user {{ resty_web_user }}
+  user:
+    name: "{{ resty_web_user }}"
+    system: yes
 
-    - name: copy nginx.conf
-      template:
-        src: nginx.conf
-        dest: /usr/local/openresty/nginx/conf/nginx.conf
+- name: copy nginx.conf
+  template:
+    src: nginx.conf
+    dest: /usr/local/openresty/nginx/conf/nginx.conf
 
-    - name: make log directory
-      file:
-        path: /var/log/openresty/
-        state: directory
+- name: make log directory
+  file:
+    path: /var/log/openresty/
+    state: directory
 
-    - name: make sites directory
-      file:
-        path: /usr/local/openresty/nginx/sites
-        state: directory
+- name: make sites directory
+  file:
+    path: "{{ resty_sites_dir }}"
+    state: directory
 
-    - name: copy default.conf
-      template:
-        src: default.conf
-        dest: /usr/local/openresty/nginx/sites/default.conf
+- name: copy default.conf
+  template:
+    src: default.conf
+    dest: {{ resty_sites_dir }}default.conf
 
-    - name: make directory for default site
-      file:
-        path: /usr/local/openresty/nginx/html/default
-        state: directory
+- name: make directory for default site
+  file:
+    path: "{{ resty_default_web_dir }}"
+    state: directory
 
-    - name: copy index.html
-      template:
-        src: index.html
-        dest: /usr/local/openresty/nginx/html/default/
+- name: copy index.html
+  template:
+    src: index.html
+    dest: "{{ resty_default_web_dir }}"
 
-  when: resty_default_server == true
+# Move to main.yml???
+- name: enable OpenResty
+  service:
+    name: openresty
+    enabled: yes
+  notify: restart openresty

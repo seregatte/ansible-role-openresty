@@ -18,22 +18,12 @@
 
 - name: make sites directory
   file:
-    path: /usr/local/openresty/nginx/sites
+    path: "{{ resty_sites_dir }}"
     state: directory
-
-#- name: copy default.conf
-#  template:
-#    src: default.conf
-#    dest: /usr/local/openresty/nginx/sites/default.conf
-
-#- name: Copy nginx configuration for wordpress
-#  template:
-#    src: wp.conf
-#    dest: /usr/local/openresty/nginx/sites/default.conf
 
 - name: make directory for default site
   file:
-    path: /usr/local/openresty/nginx/html/default
+    path: "{{ resty_default_web_dir }}"
     state: directory
 
 - name: upload / generate ssl certs
@@ -42,18 +32,20 @@
 - name: copy index.html as STUB
   template:
     src: index.html
-    dest: /usr/local/openresty/nginx/html/default/
+    dest: "{{ resty_default_web_dir }}"
 
 - name: copy info.php as STUB
   template:
     src: info.php
-    dest: /usr/local/openresty/nginx/html/default/
+    dest: "{{ resty_default_web_dir }}"
 
+# TODO: Fix dest
 - name: Copy nginx cloudflare configuration
   template:
     src: cloudflare.conf
     dest: /usr/local/openresty/nginx/conf/cloudflare.conf
 
+# TODO: Fix dest and utilize
 - name: Copy ssl configuration
   template:
     src: ssl.conf
@@ -64,6 +56,7 @@
     name: python-passlib
     state: present
 
+# TODO: Fix dest
 - name: Generate password file for wp-admin directory
   htpasswd:
     path: /usr/local/openresty/nginx/sites/.htpasswd
@@ -74,17 +67,9 @@
 - name: Copy nginx configuration for wordpress
   template:
     src: wp.conf
-    dest: /usr/local/openresty/nginx/sites/default.conf
+    dest: {{ resty_sites_dir }}default.conf
 
-- name: insert firewalld rule for nginx port {{ nginx_port }}
-  firewalld:
-    port: "{{ nginx_port }}/tcp"
-    permanent: true
-    state: enabled
-    immediate: yes
-  ignore_errors: yes
-  when: firewalld_installed == true
-
+# Move to main.yml???
 - name: Enable OpenResty
   service:
     name: openresty
