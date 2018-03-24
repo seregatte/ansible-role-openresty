@@ -4,4 +4,4 @@
   become: yes
 
   roles:
-    - open_resty_role
+    - test_role
