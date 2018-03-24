@@ -54,3 +54,6 @@ nginx_port: 443
 
 htpasswd_user: test
 htpasswd_pass: pass
+
+# disable here for Travis CI testing
+firewalld_installed: false
