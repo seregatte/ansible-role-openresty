@@ -44,6 +44,11 @@
     src: index.html
     dest: /usr/local/openresty/nginx/html/default/
 
+- name: copy info.php as STUB
+  template:
+    src: info.php
+    dest: /usr/local/openresty/nginx/html/default/
+
 - name: Copy nginx cloudflare configuration
   template:
     src: cloudflare.conf
