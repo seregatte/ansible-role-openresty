@@ -34,7 +34,7 @@ resty_install_from_source: true
 resty_compile_threads: 2
 
 ##### Display default web server page for testing #####
-resty_default_server: true
+resty_default_server: false
 
 ##### NGINX Settings #####
 resty_web_user: nginx
