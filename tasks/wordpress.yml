@@ -66,10 +66,10 @@
     password: "{{ htpasswd_pass }}"
     crypt_scheme: md5_crypt
 
- - name: Copy nginx configuration for wordpress
-   template:
-     src: wp.conf
-     dest: /usr/local/openresty/nginx/sites/default.conf
+- name: Copy nginx configuration for wordpress
+  template:
+    src: wp.conf
+    dest: /usr/local/openresty/nginx/sites/default.conf
   notify: restart nginx
 
 - name: insert firewalld rule for nginx port {{ nginx_port }}
