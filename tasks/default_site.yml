@@ -28,13 +28,13 @@
 
 - name: make directory for default site
   file:
-    path: "{{ resty_default_web_dir }}"
+    path: "{{ resty_default_web_dir }}/"
     state: directory
 
 - name: copy index.html
   template:
     src: index.html
-    dest: "{{ resty_default_web_dir }}"
+    dest: "{{ resty_default_web_dir }}/"
 
 # Move to main.yml???
 - name: enable OpenResty

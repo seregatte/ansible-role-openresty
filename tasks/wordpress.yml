@@ -18,12 +18,12 @@
 
 - name: make sites directory
   file:
-    path: "{{ resty_sites_dir }}"
+    path: "{{ resty_sites_dir }}/"
     state: directory
 
 - name: make directory for default site
   file:
-    path: "{{ resty_default_web_dir }}"
+    path: "{{ resty_default_web_dir }}/"
     state: directory
 
 - name: upload / generate ssl certs
@@ -32,12 +32,12 @@
 - name: copy index.html as STUB
   template:
     src: index.html
-    dest: "{{ resty_default_web_dir }}"
+    dest: "{{ resty_default_web_dir }}/"
 
 - name: copy info.php as STUB
   template:
     src: info.php
-    dest: "{{ resty_default_web_dir }}"
+    dest: "{{ resty_default_web_dir }}/"
 
 # TODO: Fix dest
 - name: Copy nginx cloudflare configuration
@@ -59,7 +59,7 @@
 # TODO: Fix dest
 - name: Generate password file for wp-admin directory
   htpasswd:
-    path: /usr/local/openresty/nginx/sites/.htpasswd
+    path: "{{ resty_sites_dir }}/.htpasswd"
     name: "{{ htpasswd_user }}"
     password: "{{ htpasswd_pass }}"
     crypt_scheme: md5_crypt
@@ -67,7 +67,7 @@
 - name: Copy nginx configuration for wordpress
   template:
     src: wp.conf
-    dest: "{{ resty_sites_dir }}default.conf"
+    dest: "{{ resty_sites_dir }}/default.conf"
 
 - name: Enable OpenResty
   service:
