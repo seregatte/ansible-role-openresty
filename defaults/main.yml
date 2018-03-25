@@ -36,6 +36,8 @@ resty_compile_threads: 2
 ##### Display default web server page for testing #####
 resty_default_server: false
 resty_install_wp: true
+# use self signed ssl cert
+resty_SSL_self_signed: true
 
 ##### NGINX Settings #####
 resty_web_user: nginx
@@ -45,7 +47,6 @@ with_sha1: "/usr/include/openssl"
 with_md5: "/usr/include/openssl"
 
 server_hostname: example.local
-test_wp_tasks: true
 
 ##### wp.conf #####
 nginx_port: 443

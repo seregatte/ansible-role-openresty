@@ -19,7 +19,7 @@
       args:
         creates: /etc/ssl/certs/dhparam.pem
 
-  when: SSL_self_signed == true
+  when: resty_SSL_self_signed == true
 
 #### TODO #####
 # Allow import of authority signed SSL certificates
