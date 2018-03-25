@@ -67,9 +67,8 @@
 - name: Copy nginx configuration for wordpress
   template:
     src: wp.conf
-    dest: {{ resty_sites_dir }}default.conf
+    dest: "{{ resty_sites_dir }}default.conf"
 
-# Move to main.yml???
 - name: Enable OpenResty
   service:
     name: openresty

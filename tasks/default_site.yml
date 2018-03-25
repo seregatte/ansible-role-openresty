@@ -24,7 +24,7 @@
 - name: copy default.conf
   template:
     src: default.conf
-    dest: {{ resty_sites_dir }}default.conf
+    dest: "{{ resty_sites_dir }}default.conf"
 
 - name: make directory for default site
   file:
