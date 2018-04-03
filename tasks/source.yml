@@ -1,3 +1,10 @@
+# @Author: Haupt Joshua <HauptJ>
+# @Date:   26-Mar-2018
+# @Email:  josh@hauptj.com
+# @Filename: source.yml
+# @Last modified by:   HauptJ
+# @Last modified time: 02-Apr-2018
+
 ---
 - stat: path=/tmp/openresty.tar.gz
   register: resty_tar

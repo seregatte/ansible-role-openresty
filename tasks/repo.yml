@@ -1,3 +1,10 @@
+# @Author: Haupt Joshua <HauptJ>
+# @Date:   26-Mar-2018
+# @Email:  josh@hauptj.com
+# @Filename: repo.yml
+# @Last modified by:   HauptJ
+# @Last modified time: 02-Apr-2018
+
 ---
   # Install OpenResty from the official repository
 
@@ -50,11 +57,3 @@
         - openresty-resty
 
   when: ansible_distribution == "Ubuntu" and ansible_distribution_version|int >= 16.04
-
-#- name: Copy Systemd service file
-#  template:
-#    src: openresty.j2
-#    dest: /etc/systemd/system/openresty.service
-#    owner: root
-#    group: root
-#    mode: 0644

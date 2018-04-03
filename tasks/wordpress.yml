@@ -1,3 +1,10 @@
+# @Author: Haupt Joshua <HauptJ>
+# @Date:   26-Mar-2018
+# @Email:  josh@hauptj.com
+# @Filename: wordpress.yml
+# @Last modified by:   HauptJ
+# @Last modified time: 02-Apr-2018
+
 ---
   # OpenResty site configuration
 
@@ -39,13 +46,11 @@
     src: info.php
     dest: "{{ resty_default_web_dir }}/"
 
-# TODO: Fix dest
 - name: Copy nginx cloudflare configuration
   template:
     src: cloudflare.conf
     dest: /usr/local/openresty/nginx/conf/cloudflare.conf
 
-# TODO: Fix dest and utilize
 - name: Copy ssl configuration
   template:
     src: ssl.conf
@@ -56,7 +61,6 @@
     name: python-passlib
     state: present
 
-# TODO: Fix dest
 - name: Generate password file for wp-admin directory
   htpasswd:
     path: "{{ resty_sites_dir }}/.htpasswd"
