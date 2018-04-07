@@ -1,3 +1,10 @@
+# @Author: Haupt Joshua
+# @Date:   26-Mar-2018
+# @Email:  josh@hauptj.com
+# @Filename: main.yml
+# @Last modified by:   Haupt Joshua
+# @Last modified time: 07-Apr-2018
+
 ---
 # defaults file for nginx
 openresty_version: 1.11.2.5
@@ -53,11 +60,15 @@ nginx_port: 443
 # STUB IPv6
 nginx_ipv6:  2607:5300:201:2100::5:1111
 
+##### htpasswd #####
 htpasswd_user: test
 htpasswd_pass: pass
 
-# disable here for Travis CI testing
+# Skip firewalld task for Travis CI testing
 firewalld_installed: false
 
+# Web Directories
+# Default directory
 resty_default_web_dir: /usr/local/openresty/nginx/html/default
+# Sites directory
 resty_sites_dir: /usr/local/openresty/nginx/sites
