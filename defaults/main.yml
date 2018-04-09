@@ -41,10 +41,10 @@ resty_install_from_source: true
 resty_compile_threads: 2
 
 ##### Display default web server page for testing #####
-resty_default_server: false
-resty_install_wp: true
+resty_default_server: true
+resty_install_wp: false
 # use self signed ssl cert
-resty_SSL_self_signed: true
+resty_SSL_self_signed: false
 
 ##### NGINX Settings #####
 resty_web_user: nginx

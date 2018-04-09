@@ -1,3 +1,18 @@
 ---
-  
-dependencies: []
+galaxy_info:
+  author: Joshua Haupt
+  description: Installs OpenResty Nginx
+  company: hauptj.com
+  license: MIT
+  min_ansible_version: 2.3
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  galaxy_tags:
+    - nginx
+    - redis
+    - openresty
+dependencies:
+  - { role: geerlingguy.repo-epel }
+  - { role: geerlingguy.repo-remi }
