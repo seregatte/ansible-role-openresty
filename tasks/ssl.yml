@@ -23,7 +23,7 @@
 - name: Generate Self Signed SSL for testing
   block:
     - name: Generate self-signed key and certificate pair with OpenSSL
-      command: "openssl req -x509 -nodes -subj "/C=US/ST=Illinois/L=Hell/O=IT/CN=hauptj.com" -days 365 -newkey rsa:2048 -keyout {{ resty_SSL_key_dir }}/nginx-selfsigned.key -out {{ resty_SSL_cert_dir }}/nginx-selfsigned.crt"
+      command: 'openssl req -x509 -nodes -subj "/C=US/ST=Illinois/L=Hell/O=IT/CN=hauptj.com" -days 365 -newkey rsa:2048 -keyout {{ resty_SSL_key_dir }}/nginx-selfsigned.key -out {{ resty_SSL_cert_dir }}/nginx-selfsigned.crt'
       args:
         creates: "{{ resty_SSL_cert_dir }}/nginx-selfsigned.crt"
 
