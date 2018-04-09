@@ -10,11 +10,11 @@
   # Ref: https://www.digitalocean.com/community/tutorials/how-to-use-the-openresty-web-framework-for-nginx-on-ubuntu-16-04
 
 - name: Compile from source
-  import_tasks: source.yml
+  include_tasks: source.yml
   when: resty_install_from_source == true
 
 - name: Install form repo
-  import_tasks: repo.yml
+  include_tasks: repo.yml
   when: resty_install_from_source == false
 
   ##### Post Installation Tasks #####
@@ -25,11 +25,11 @@
     dest: /etc/systemd/system/openresty.service
 
 - name: configure default site for testing
-  import_tasks: default_site.yml
+  include_tasks: default_site.yml
   when: resty_default_server == true
 
 - name: configure wordpress site
-  import_tasks: wordpress.yml
+  include_tasks: wordpress.yml
   when: resty_default_server == false and resty_install_wp == true
 
 - name: insert firewalld rule for nginx port {{ nginx_port }}

@@ -3,7 +3,7 @@
 # @Email:  josh@hauptj.com
 # @Filename: main.yml
 # @Last modified by:   Haupt Joshua
-# @Last modified time: 07-Apr-2018
+# @Last modified time: 08-Apr-2018
 
 ---
 # defaults file for nginx
@@ -46,7 +46,12 @@ resty_install_wp: false
 # use self signed ssl cert
 resty_SSL_self_signed: false
 
-##### NGINX Settings #####
+# SSL key directory
+resty_SSL_key_dir: /etc/ssl/private
+# SSL cert directory
+resty_SSL_cert_dir: /etc/ssl/certs
+
+# OpenResty web service user and group
 resty_web_user: nginx
 
 ##### These modules are depreciated #####
@@ -72,3 +77,12 @@ firewalld_installed: false
 resty_default_web_dir: /usr/local/openresty/nginx/html/default
 # Sites directory
 resty_sites_dir: /usr/local/openresty/nginx/sites
+
+# Config directory
+resty_conf_dir: /usr/local/openresty/nginx/conf
+# Log directory
+resty_log_dir: /var/log/openresty
+
+### PHP-FPM ###
+# PHP Socket
+php_sock: /var/run/wordpress.sock

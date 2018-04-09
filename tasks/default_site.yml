@@ -16,22 +16,22 @@
 - name: copy nginx.conf
   template:
     src: nginx.conf
-    dest: /usr/local/openresty/nginx/conf/nginx.conf
+    dest: "{{ resty_conf_dir }}/nginx.conf"
 
 - name: make log directory
   file:
-    path: /var/log/openresty/
+    path: "{{ resty_log_dir }}/"
     state: directory
 
 - name: make sites directory
   file:
-    path: "{{ resty_sites_dir }}"
+    path: "{{ resty_sites_dir }}/"
     state: directory
 
 - name: copy default.conf
   template:
     src: default.conf
-    dest: "{{ resty_sites_dir }}default.conf"
+    dest: "{{ resty_sites_dir }}/default.conf"
 
 - name: make directory for default site
   file:
@@ -47,5 +47,7 @@
 - name: enable OpenResty
   service:
     name: openresty
+    state: started
     enabled: yes
+  ignore_errors: yes
   notify: restart openresty
