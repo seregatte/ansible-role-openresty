@@ -4,8 +4,6 @@ sudo: required
 env:
   - distribution: centos
     version: 7
-  - distribution: ubuntu
-    version: xenial
 
 services:
   - docker
@@ -20,4 +18,3 @@ script:
   - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/test_role/travis/test.yml --syntax-check'
   - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/test_role/travis/test.yml'
   - 'sudo docker rm -f "$(cat ${container_id})"'
-  # Need to fix Ubuntu Repo install before testing it
