@@ -1,3 +1,12 @@
 ---
-- name: restart nginx
-  service: name=nginx enabled=yes state=restarted
+
+- name: start openresty
+  service:
+    name: openresty
+    state: started
+
+- name: restart openresty
+  service:
+    name: openresty
+    enabled: yes
+    state: restarted

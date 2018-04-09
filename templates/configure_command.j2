@@ -1,9 +1,6 @@
 #!/bin/bash
 mkdir /var/lib/nginx
-./configure \
---pid-path=/var/run/nginx.pid \
---lock-path=/var/lock/nginx.lock \
---error-log-path=/var/log/nginx/error.log \
+./configure -j{{ resty_compile_threads }} \
 {% if with_luajit %} --with-luajit {% endif %}
 {% if with_dav %} --with-http_dav_module {% endif %}
 {% if with_flv %} --with-http_flv_module {% endif %}
@@ -27,9 +24,11 @@ mkdir /var/lib/nginx
 {% if with_addition %} --with-http_addition_module {% endif %}
 {% if with_gunzip %} --with-http_gunzip_module {% endif %}
 {% if with_postgres %} --with-http_postgres_module {% endif %}
+{% if with_http2 %} --with-http_v2_module {% endif %}
+{% if with_file_aio %} --with-file-aio {% endif %}
 --http-client-body-temp-path=/var/lib/nginx/body \
 --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
 --http-log-path=/var/log/nginx/access.log \
 --http-proxy-temp-path=/var/lib/nginx/proxy \
 --http-scgi-temp-path=/var/lib/nginx/scgi \
---http-uwsgi-temp-path=/var/lib/nginx/uwsgi
+--http-uwsgi-temp-path=/var/lib/nginx/uwsgi \

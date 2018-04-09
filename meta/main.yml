@@ -1,16 +1,18 @@
 ---
 galaxy_info:
-  author: João Paulo Seregatte Costa
-  description: Configures and installs openresty
+  author: Joshua Haupt
+  description: Installs OpenResty Nginx
+  company: hauptj.com
   license: MIT
-  min_ansible_version: 1.2
+  min_ansible_version: 2.3
   platforms:
-  - name: Ubuntu
+  - name: EL
     versions:
-    - all
-  categories:
-  - web
-  - development
-  - networking
-
-dependencies: []
+    - 7
+  galaxy_tags:
+    - nginx
+    - redis
+    - openresty
+dependencies:
+  - { role: geerlingguy.repo-epel }
+  - { role: geerlingguy.repo-remi }

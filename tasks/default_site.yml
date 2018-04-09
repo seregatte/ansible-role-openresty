@@ -1,0 +1,53 @@
+# @Author: Haupt Joshua <HauptJ>
+# @Date:   26-Mar-2018
+# @Email:  josh@hauptj.com
+# @Filename: default_site.yml
+# @Last modified by:   HauptJ
+# @Last modified time: 02-Apr-2018
+
+---
+  # Configure default site for testing
+
+- name: create web service user {{ resty_web_user }}
+  user:
+    name: "{{ resty_web_user }}"
+    system: yes
+
+- name: copy nginx.conf
+  template:
+    src: nginx.conf
+    dest: "{{ resty_conf_dir }}/nginx.conf"
+
+- name: make log directory
+  file:
+    path: "{{ resty_log_dir }}/"
+    state: directory
+
+- name: make sites directory
+  file:
+    path: "{{ resty_sites_dir }}/"
+    state: directory
+
+- name: copy default.conf
+  template:
+    src: default.conf
+    dest: "{{ resty_sites_dir }}/default.conf"
+
+- name: make directory for default site
+  file:
+    path: "{{ resty_default_web_dir }}/"
+    state: directory
+
+- name: copy index.html
+  template:
+    src: index.html
+    dest: "{{ resty_default_web_dir }}/"
+
+# Move to main.yml???
+- name: enable OpenResty
+  service:
+    name: openresty
+    state: started
+    enabled: yes
+  ignore_errors: yes
+  notify: restart openresty

@@ -3,6 +3,7 @@
   sudo: True
 
   vars:
+    openresty_download_url: https://openresty.org/download/openresty-
     openresty_version: 1.7.7.2
     with_luajit: true
     with_dav: true
@@ -30,9 +31,9 @@
   tasks:
     - include: '../tasks/main.yml'
 
-- hosts: galaxy
-  sudo: True
-  vars:
-    - openresty_version: 1.7.7.2 # Optional because we already have a default value
-  roles:
-    - seregatte.openresty
+#- hosts: galaxy
+#  sudo: True
+#  vars:
+#    - openresty_version: 1.7.7.2 # Optional because we already have a default value
+#  roles:
+#    - seregatte.openresty

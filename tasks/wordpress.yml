@@ -1,0 +1,82 @@
+# @Author: Haupt Joshua <HauptJ>
+# @Date:   26-Mar-2018
+# @Email:  josh@hauptj.com
+# @Filename: wordpress.yml
+# @Last modified by:   HauptJ
+# @Last modified time: 02-Apr-2018
+
+---
+  # OpenResty site configuration
+
+- name: create web service user {{ resty_web_user }}
+  user:
+    name: "{{ resty_web_user }}"
+    system: yes
+
+- name: copy nginx.conf
+  template:
+    src: nginx.conf
+    dest: "{{ resty_conf_dir }}/nginx.conf"
+
+- name: make log directory {{ resty_log_dir }}
+  file:
+    path: "{{ resty_log_dir }}/"
+    state: directory
+
+- name: make sites directory {{ resty_sites_dir }}
+  file:
+    path: "{{ resty_sites_dir }}/"
+    state: directory
+
+- name: make directory for default site {{ resty_default_web_dir }}
+  file:
+    path: "{{ resty_default_web_dir }}/"
+    state: directory
+
+- name: upload / generate ssl certs
+  include_tasks: ssl.yml
+
+- name: copy index.html as STUB
+  template:
+    src: index.html
+    dest: "{{ resty_default_web_dir }}/"
+
+- name: copy info.php as STUB
+  template:
+    src: info.php
+    dest: "{{ resty_default_web_dir }}/"
+
+- name: Copy nginx cloudflare configuration
+  template:
+    src: cloudflare.conf
+    dest: "{{ resty_conf_dir }}/cloudflare.conf"
+
+- name: Copy ssl configuration
+  template:
+    src: ssl.conf
+    dest: "{{ resty_conf_dir }}/ssl.conf"
+
+- name: Install python-passlib to use htpasswd module
+  yum:
+    name: python-passlib
+    state: present
+
+- name: Generate password file for wp-admin directory
+  htpasswd:
+    path: "{{ resty_sites_dir }}/.htpasswd"
+    name: "{{ htpasswd_user }}"
+    password: "{{ htpasswd_pass }}"
+    crypt_scheme: md5_crypt
+
+- name: Copy nginx configuration for wordpress
+  template:
+    src: wp.conf
+    dest: "{{ resty_sites_dir }}/default.conf"
+
+- name: Enable OpenResty
+  service:
+    name: openresty
+    state: started
+    enabled: yes
+  ignore_errors: yes
+  notify: restart openresty

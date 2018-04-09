@@ -1,3 +1,10 @@
+# @Author: Haupt Joshua
+# @Date:   26-Mar-2018
+# @Email:  josh@hauptj.com
+# @Filename: main.yml
+# @Last modified by:   Haupt Joshua
+# @Last modified time: 08-Apr-2018
+
 ---
 # defaults file for nginx
 openresty_version: 1.11.2.5
@@ -14,8 +21,6 @@ with_ssl: true
 with_sub: true
 with_xslt: true
 with_ipv6: true
-with_sha1: "/usr/include/openssl"
-with_md5: "/usr/include/openssl"
 with_mail: true
 with_mail_ssl: true
 with_secure_link: true
@@ -25,3 +30,59 @@ with_auth_request: true
 with_addition: true
 with_gunzip: true
 with_postgres: true
+with_http2: true
+with_file_aio: true
+
+##### Compile from source or install from repo #####
+# set to false to install from repo
+resty_install_from_source: true
+
+##### Compile Threads #####
+resty_compile_threads: 2
+
+##### Display default web server page for testing #####
+resty_default_server: true
+resty_install_wp: false
+# use self signed ssl cert
+resty_SSL_self_signed: false
+
+# SSL key directory
+resty_SSL_key_dir: /etc/ssl/private
+# SSL cert directory
+resty_SSL_cert_dir: /etc/ssl/certs
+
+# OpenResty web service user and group
+resty_web_user: nginx
+
+##### These modules are depreciated #####
+with_sha1: "/usr/include/openssl"
+with_md5: "/usr/include/openssl"
+
+server_hostname: example.local
+
+##### wp.conf #####
+nginx_port: 443
+# STUB IPv6
+nginx_ipv6:  2607:5300:201:2100::5:1111
+
+##### htpasswd #####
+htpasswd_user: test
+htpasswd_pass: pass
+
+# Skip firewalld task for Travis CI testing
+firewalld_installed: false
+
+# Web Directories
+# Default directory
+resty_default_web_dir: /usr/local/openresty/nginx/html/default
+# Sites directory
+resty_sites_dir: /usr/local/openresty/nginx/sites
+
+# Config directory
+resty_conf_dir: /usr/local/openresty/nginx/conf
+# Log directory
+resty_log_dir: /var/log/openresty
+
+### PHP-FPM ###
+# PHP Socket
+php_sock: /var/run/wordpress.sock
