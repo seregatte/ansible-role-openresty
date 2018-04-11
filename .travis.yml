@@ -18,3 +18,6 @@ script:
   - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/test_role/travis/test.yml --syntax-check'
   - 'sudo docker exec "$(cat ${container_id})" env ANSIBLE_FORCE_COLOR=1 ansible-playbook -v /etc/ansible/roles/test_role/travis/test.yml'
   - 'sudo docker rm -f "$(cat ${container_id})"'
+
+notifications:
+    webhooks: https://galaxy.ansible.com/api/v1/notifications/
