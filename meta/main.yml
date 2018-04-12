@@ -1,3 +1,10 @@
+# @Author: Haupt Joshua
+# @Date:   26-Mar-2018
+# @Email:  josh@hauptj.com
+# @Filename: main.yml
+# @Last modified by:   Haupt Joshua
+# @Last modified time: 11-Apr-2018
+
 ---
 galaxy_info:
   author: Joshua Haupt
@@ -13,6 +20,7 @@ galaxy_info:
     - nginx
     - redis
     - openresty
+    - web
 dependencies:
-  - { role: geerlingguy.repo-epel }
-  - { role: geerlingguy.repo-remi }
+  - role: geerlingguy.repo-epel
+  - role: geerlingguy.repo-remi
