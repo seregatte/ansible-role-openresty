@@ -86,3 +86,6 @@ resty_log_dir: /var/log/openresty
 ### PHP-FPM ###
 # PHP Socket
 php_sock: /var/run/wordpress.sock
+
+# CI test, should only be set to true for testing
+resty_ci_test: true
