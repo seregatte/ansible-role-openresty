@@ -4,7 +4,6 @@ Configures and installs [OpenResty NGINX](https://openresty.org/en/)
 [![Build Status](https://travis-ci.org/HauptJ/ansible-role-openresty.svg?branch=master)](https://travis-ci.org/HauptJ/ansible-role-openresty)
 
 ## Requirements
-
 - Ansible 2.3+
 - CentOS 7.4+
 - Ubuntu 16.04+ [**SOURCE INSTALL ONLY**]
