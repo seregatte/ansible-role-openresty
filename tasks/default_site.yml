@@ -28,6 +28,9 @@
     path: "{{ resty_sites_dir }}/"
     state: directory
 
+- name: upload / generate ssl certs
+  import_tasks: ssl.yml
+
 - name: copy default.conf
   template:
     src: default.conf
@@ -42,6 +45,16 @@
   template:
     src: index.html
     dest: "{{ resty_default_web_dir }}/"
+
+- name: copy static files
+  copy:
+    src: "files/{{ item }}"
+    dest: "{{ resty_default_web_dir }}/"
+  with_items:
+    - resume.pdf
+    - software_engineering_proj_ppt.pdf
+    - hci_proj_ppt.pptx
+  when: resty_static_files == true
 
 # Move to main.yml???
 - name: enable OpenResty
