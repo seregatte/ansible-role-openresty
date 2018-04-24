@@ -47,7 +47,7 @@ resty_static_files: true
 # Configure OpenResty for WordPress w/ Redis
 resty_install_wp: false
 # use self signed ssl cert
-resty_SSL_self_signed: false
+resty_SSL_self_signed: true
 
 # SSL key directory
 resty_SSL_key_dir: /etc/ssl/private
