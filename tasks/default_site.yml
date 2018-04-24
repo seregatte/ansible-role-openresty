@@ -54,7 +54,7 @@
   with_items:
     - resume.pdf
     - swe_proj_ppt.pdf
-    - hci_proj_ppt.pptx
+    - hci_proj_ppt.pdf
   when: resty_static_files == true
 
 # Move to main.yml???
