@@ -46,13 +46,14 @@
     src: index.html
     dest: "{{ resty_default_web_dir }}/"
 
+  # TODO: Move file names to vars
 - name: copy static files
   copy:
     src: "files/{{ item }}"
     dest: "{{ resty_default_web_dir }}/"
   with_items:
     - resume.pdf
-    - software_engineering_proj_ppt.pdf
+    - swe_proj_ppt.pdf
     - hci_proj_ppt.pptx
   when: resty_static_files == true
 
