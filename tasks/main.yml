@@ -24,10 +24,12 @@
     src: openresty.service
     dest: /etc/systemd/system/openresty.service
 
+  # Plain HTTP server
 - name: configure default site for testing
   include_tasks: default_site.yml
   when: resty_default_server == true
 
+  # HTTP server configured for WordPress
 - name: configure wordpress site
   include_tasks: wordpress.yml
   when: resty_default_server == false and resty_install_wp == true

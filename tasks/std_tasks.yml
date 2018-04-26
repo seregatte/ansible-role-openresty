@@ -1,0 +1,45 @@
+---
+  # Create OpenResty User, Directories, etc
+
+- name: create web service user {{ resty_web_user }}
+  user:
+    name: "{{ resty_web_user }}"
+    system: yes
+
+- name: copy nginx.conf
+  template:
+    src: nginx.conf
+    dest: "{{ resty_conf_dir }}/nginx.conf"
+
+- name: Copy nginx cloudflare configuration
+  template:
+    src: cloudflare.conf
+    dest: "{{ resty_conf_dir }}/cloudflare.conf"
+
+- name: Copy ssl configuration
+  template:
+    src: ssl.conf
+    dest: "{{ resty_conf_dir }}/ssl.conf"
+
+- name: make log directory {{ resty_log_dir }}
+  file:
+    path: "{{ resty_log_dir }}/"
+    state: directory
+
+- name: make sites directory {{ resty_sites_dir }}
+  file:
+    path: "{{ resty_sites_dir }}/"
+    state: directory
+
+- name: make directory for default site {{ resty_default_web_dir }}
+  file:
+    path: "{{ resty_default_web_dir }}/"
+    state: directory
+
+- name: upload / generate ssl certs
+  import_tasks: ssl.yml
+
+- name: copy index.html as STUB
+  template:
+    src: index.html
+    dest: "{{ resty_default_web_dir }}/"
