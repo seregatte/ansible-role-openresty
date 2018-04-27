@@ -29,10 +29,15 @@
   include_tasks: default_site.yml
   when: resty_default_server == true
 
+  # CV Server
+- name: configure CV site
+  include_tasks: cv.yml
+  when: resty_default_server == false and resty_cv_server == true
+
   # HTTP server configured for WordPress
 - name: configure wordpress site
   include_tasks: wordpress.yml
-  when: resty_default_server == false and resty_install_wp == true
+  when: resty_default_server == false and resty_cv_server == false and resty_install_wp == true
 
 - name: insert firewalld rule for nginx port {{ nginx_port }}
   firewalld:

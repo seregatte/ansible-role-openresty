@@ -9,23 +9,12 @@
   # Configure default site for testing
 
 - name: Perform standard tasks
-  import_tasks: std_tasks.yml
+  include_tasks: std_tasks.yml
 
 - name: copy default.conf
   template:
     src: default.conf
     dest: "{{ resty_sites_dir }}/default.conf"
-
-  # TODO: Move file names to vars
-- name: copy static files
-  copy:
-    src: "files/{{ item }}"
-    dest: "{{ resty_default_web_dir }}/"
-  with_items:
-    - resume.pdf
-    - swe_proj_ppt.pdf
-    - hci_proj_ppt.pdf
-  when: resty_static_files == true
 
 # Move to main.yml???
 - name: enable OpenResty

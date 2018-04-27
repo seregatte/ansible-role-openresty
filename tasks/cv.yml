@@ -1,0 +1,36 @@
+# @Author: Haupt Joshua <HauptJ>
+# @Date:   26-Mar-2018
+# @Email:  josh@hauptj.com
+# @Filename: default_site.yml
+# @Last modified by:   HauptJ
+# @Last modified time: 02-Apr-2018
+
+---
+  # Configure default site for testing
+
+- name: Perform standard tasks
+  include_tasks: std_tasks.yml
+
+- name: copy cv.conf
+  template:
+    src: cv.conf
+    dest: "{{ resty_sites_dir }}/default.conf"
+
+  # TODO: Move file names to vars
+- name: copy static files
+  copy:
+    src: "files/{{ item }}"
+    dest: "{{ resty_default_web_dir }}/"
+  with_items:
+    - resume.pdf
+    - swe_proj_ppt.pdf
+    - hci_proj_ppt.pdf
+
+# Move to main.yml???
+- name: enable OpenResty
+  service:
+    name: openresty
+    state: started
+    enabled: yes
+  ignore_errors: yes
+  notify: restart openresty

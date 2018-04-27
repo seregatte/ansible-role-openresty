@@ -37,7 +37,7 @@
     state: directory
 
 - name: upload / generate ssl certs
-  import_tasks: ssl.yml
+  include_tasks: ssl.yml
 
 - name: copy index.html as STUB
   template:

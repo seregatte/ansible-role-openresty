@@ -9,7 +9,7 @@
   # OpenResty site configuration
 
 - name: Perform standard tasks
-  import_tasks: std_tasks.yml
+  include_tasks: std_tasks.yml
 
 # TODO: check for presence of php info page during CI testing
 - name: copy info.php as STUB
