@@ -2,8 +2,8 @@
 # @Date:   26-Mar-2018
 # @Email:  josh@hauptj.com
 # @Filename: default_site.yml
-# @Last modified by:   HauptJ
-# @Last modified time: 02-Apr-2018
+# @Last modified by:   Haupt Joshua
+# @Last modified time: 28-Apr-2018
 
 ---
   # Configure default site for testing
@@ -25,6 +25,9 @@
     - resume.pdf
     - swe_proj_ppt.pdf
     - hci_proj_ppt.pdf
+    - mst_reu_ppt.pdf
+    - mst_reu_poster.pdf
+    - faculty_acclamation.png
 
 # Move to main.yml???
 - name: enable OpenResty
