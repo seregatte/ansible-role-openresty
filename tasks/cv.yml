@@ -22,7 +22,7 @@
     src: "files/{{ item }}"
     dest: "{{ resty_default_web_dir }}/"
   with_items:
-    - resume.pdf
+    - cv.pdf
     - swe_proj_ppt.pdf
     - hci_proj_ppt.pdf
     - mst_reu_ppt.pdf
