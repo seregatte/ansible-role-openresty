@@ -22,7 +22,9 @@ PIDFile=/run/openresty.pid
 ExecStartPre=/usr/local/openresty/bin/openresty -t -q -g 'daemon on; master_process on;'
 ExecStart=/usr/local/openresty/bin/openresty -g 'daemon on; master_process on;'
 ExecReload=/usr/local/openresty/bin/openresty -g 'daemon on; master_process on;' -s reload
-ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/openresty.pid
+#ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/openresty.pid
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
 TimeoutStopSec=5
 KillMode=mixed
 

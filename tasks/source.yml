@@ -10,11 +10,6 @@
   stat: path=/tmp/openresty.tar.gz
   register: resty_tar
 
-# TODO: Check if this is even used???
-#- name: Check if OpenResty is already installed
-#  stat: path=/usr/sbin/nginx
-#  register: resty_exe
-
 # meta_end_play in 2.2 gist.github.com/jimi-c/c45b225e101fe673e42ffb719f259fbd
 - name: Check if OpenResty already installed...
   shell: /usr/local/openresty/bin/openresty -v
@@ -57,7 +52,7 @@
             name: '*'
             state: latest
 
-        - name: Install required packages to compile OpenResy from source - CentOS
+        - name: Install required packages to compile OpenResty from source - CentOS
           yum:
             name: "{{ item }}"
             state: latest
