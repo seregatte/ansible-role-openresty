@@ -21,6 +21,8 @@ galaxy_info:
     - redis
     - openresty
     - web
-dependencies:
-  - { role: geerlingguy.repo-epel, when: resty_ci_test == true and ansible_distribution == "CentOS" }
-  - { role: geerlingguy.repo-remi, when: resty_ci_test == true and ansible_distribution == "CentOS" }
+  dependencies:
+    - role: geerlingguy.repo-epel
+      when: resty_ci_test == true and ansible_distribution == "CentOS"
+    - role: geerlingguy.repo-remi
+      when: resty_ci_test == true and ansible_distribution == "CentOS"
