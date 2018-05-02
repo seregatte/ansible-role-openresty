@@ -19,17 +19,17 @@
 
   ##### Post Installation Tasks #####
 
-- name: copy systemd service file for CentOS
+- name: copy systemd service file #for CentOS
   template:
     src: openresty.service
     dest: /etc/systemd/system/openresty.service
-  when: ansible_distribution == "CentOS"
+  #when: ansible_distribution == "CentOS"
 
-- name: copy systemd service file for Ubuntu
-  template:
-    src: openresty.j2
-    dest: /etc/systemd/system/openresty.service
-  when: ansible_distribution == "Ubuntu"
+#- name: copy systemd service file for Ubuntu
+#  template:
+#    src: openresty.j2
+#    dest: /etc/systemd/system/openresty.service
+#  when: ansible_distribution == "Ubuntu"
 
   # Plain HTTP server
 - name: configure default site for testing
