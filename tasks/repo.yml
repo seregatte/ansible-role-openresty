@@ -38,7 +38,7 @@
     # broken
     - name: Install OpenResty repository
       apt_repository:
-        repo: http://openresty.org/package/ubuntu xenial main
+        repo: https://openresty.org/package/ubuntu/dists/xenial/main/
         state: present
     # - name: Install OpenResty Repository
     #   shell: "{{ item }}"
