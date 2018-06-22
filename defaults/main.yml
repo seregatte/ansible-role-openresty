@@ -44,6 +44,7 @@ resty_compile_threads: 2
 resty_default_server: false
 # Static CV server
 resty_cv_server: true
+resty_cv_file_dir: cvfiles
 # Configure OpenResty for WordPress w/ Redis
 resty_install_wp: false
 # use self signed ssl cert

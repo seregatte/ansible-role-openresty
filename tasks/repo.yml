@@ -1,10 +1,3 @@
-# @Author: Haupt Joshua <HauptJ>
-# @Date:   26-Mar-2018
-# @Email:  josh@hauptj.com
-# @Filename: repo.yml
-# @Last modified by:   HauptJ
-# @Last modified time: 02-Apr-2018
-
 ---
   # Install OpenResty from the official repository
 
@@ -21,7 +14,6 @@
         repo_gpgcheck: yes
         gpgkey: https://openresty.org/package/pubkey.gpg
         enabled: yes
-        # enabled_metadata=1
 
     - name: Install OpenResty and Resty-CLI on CentOS
       yum:
@@ -42,15 +34,11 @@
         state: latest
         update_cache: yes
 
-    #- name: import GPG key
-    #  shell: wget -qO - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
-
     - name: Add an Apt signing key for OpenResty repo
       apt_key:
         url: https://openresty.org/package/pubkey.gpg
         state: present
 
-    # broken
     - name: Install OpenResty repository
       apt_repository:
         repo: deb https://openresty.org/package/ubuntu {{ansible_distribution_release}} main

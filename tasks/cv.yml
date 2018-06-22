@@ -1,9 +1,3 @@
-# @Author: Haupt Joshua <HauptJ>
-# @Date:   26-Mar-2018
-# @Email:  josh@hauptj.com
-# @Filename: default_site.yml
-# @Last modified by:   Haupt Joshua
-# @Last modified time: 28-Apr-2018
 
 ---
   # Configure default site for testing
@@ -16,10 +10,9 @@
     src: cv.conf
     dest: "{{ resty_sites_dir }}/default.conf"
 
-  # TODO: Move file names to vars
 - name: copy static files
   copy:
-    src: "files/{{ item }}"
+    src: "{{ resty_cv_file_dir }}/{{ item }}"
     dest: "{{ resty_default_web_dir }}/"
   with_items:
     - cv.pdf
@@ -28,12 +21,3 @@
     - mst_reu_ppt.pdf
     - mst_reu_poster.pdf
     - faculty_acclamation.png
-
-# Move to main.yml???
-- name: enable OpenResty
-  service:
-    name: openresty
-    state: started
-    enabled: yes
-  ignore_errors: yes
-  notify: restart openresty

@@ -1,17 +1,9 @@
-# @Author: Haupt Joshua <HauptJ>
-# @Date:   26-Mar-2018
-# @Email:  josh@hauptj.com
-# @Filename: wordpress.yml
-# @Last modified by:   HauptJ
-# @Last modified time: 02-Apr-2018
-
 ---
   # OpenResty site configuration
 
 - name: Perform standard tasks
   include_tasks: std_tasks.yml
 
-# TODO: check for presence of php info page during CI testing
 - name: copy info.php as STUB
   template:
     src: info.php
@@ -34,11 +26,3 @@
   template:
     src: wp.conf
     dest: "{{ resty_sites_dir }}/default.conf"
-
-- name: Enable OpenResty
-  service:
-    name: openresty
-    state: started
-    enabled: yes
-  ignore_errors: yes
-  notify: restart openresty

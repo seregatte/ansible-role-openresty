@@ -1,10 +1,3 @@
-# @Author: Haupt Joshua
-# @Date:   15-Apr-2018
-# @Email:  josh@hauptj.com
-# @Filename: main.yml
-# @Last modified by:   Haupt Joshua
-# @Last modified time: 01-May-2018
-
 ---
   # Driver for OpenResty Installation
   # Ref: https://www.digitalocean.com/community/tutorials/how-to-use-the-openresty-web-framework-for-nginx-on-ubuntu-16-04
@@ -19,7 +12,7 @@
 
   ##### Post Installation Tasks #####
 
-- name: copy systemd service file #for CentOS
+- name: copy systemd service file
   template:
     src: openresty.service
     dest: /etc/systemd/system/openresty.service
@@ -38,6 +31,14 @@
 - name: configure wordpress site
   include_tasks: wordpress.yml
   when: resty_default_server == false and resty_cv_server == false and resty_install_wp == true
+
+- name: Enable OpenResty
+  service:
+    name: openresty
+    state: started
+    enabled: yes
+  ignore_errors: yes
+  notify: restart openresty
 
 - name: insert firewalld rule for nginx port {{ nginx_port }}
   firewalld:
