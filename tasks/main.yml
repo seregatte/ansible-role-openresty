@@ -21,11 +21,15 @@
 - name: configure default site for testing
   include_tasks: default_site.yml
   when: resty_default_server == true and resty_install_wp == false
+  tags:
+    - test
 
   # HTTP server configured for WordPress
 - name: configure wordpress site
   include_tasks: wordpress.yml
   when: resty_default_server == false and resty_install_wp == true
+  tags:
+    - deploy
 
 - name: Enable OpenResty
   service:
@@ -43,3 +47,5 @@
     immediate: yes
   ignore_errors: yes
   when: firewalld_installed == true
+  tags:
+    - firewalld
