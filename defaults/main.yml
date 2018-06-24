@@ -1,9 +1,3 @@
-# @Author: Haupt Joshua
-# @Date:   26-Mar-2018
-# @Email:  josh@hauptj.com
-# @Filename: main.yml
-# @Last modified by:   Haupt Joshua
-# @Last modified time: 08-Apr-2018
 
 ---
 # defaults file for nginx
@@ -41,10 +35,7 @@ resty_install_from_source: true
 resty_compile_threads: 2
 
 # Display default web server settings for hosting static files
-resty_default_server: false
-# Static CV server
-resty_cv_server: true
-resty_cv_file_dir: cvfiles
+resty_default_server: true
 # Configure OpenResty for WordPress w/ Redis
 resty_install_wp: false
 # use self signed ssl cert
