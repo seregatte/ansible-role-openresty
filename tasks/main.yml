@@ -4,11 +4,15 @@
 
 - name: Compile from source
   include_tasks: source.yml
-  when: resty_install_from_source == true
+  #when: resty_install_from_source == true
+  tags:
+    - source
 
 - name: Install form repo
   include_tasks: repo.yml
-  when: resty_install_from_source == false
+  #when: resty_install_from_source == false
+  tags:
+    - repo
 
   ##### Post Installation Tasks #####
 
@@ -20,16 +24,16 @@
   # Plain HTTP server
 - name: configure default site for testing
   include_tasks: default_site.yml
-  when: resty_default_server == true and resty_install_wp == false
+  #when: resty_default_server == true and resty_install_wp == false
   tags:
     - test
 
   # HTTP server configured for WordPress
 - name: configure wordpress site
   include_tasks: wordpress.yml
-  when: resty_default_server == false and resty_install_wp == true
+  #when: resty_default_server == false and resty_install_wp == true
   tags:
-    - deploy
+    - wordpress
 
 - name: Enable OpenResty
   service:
@@ -46,6 +50,6 @@
     state: enabled
     immediate: yes
   ignore_errors: yes
-  when: firewalld_installed == true
+  #when: firewalld_installed == true
   tags:
     - firewalld
