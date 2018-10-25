@@ -43,13 +43,14 @@
   ignore_errors: yes
   notify: restart openresty
 
-- name: insert firewalld rule for nginx port {{ nginx_port }}
-  firewalld:
-    port: "{{ nginx_port }}/tcp"
-    permanent: true
-    state: enabled
-    immediate: yes
-  ignore_errors: yes
-  #when: firewalld_installed == true
-  tags:
-    - firewalld
+#TODO: REMOVE
+# - name: insert firewalld rule for nginx port {{ nginx_port }}
+#   firewalld:
+#     port: "{{ nginx_port }}/tcp"
+#     permanent: true
+#     state: enabled
+#     immediate: yes
+#   ignore_errors: yes
+#   #when: firewalld_installed == true
+#   tags:
+#     - firewalld

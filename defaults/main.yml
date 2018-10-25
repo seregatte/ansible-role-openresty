@@ -1,7 +1,7 @@
 
 ---
 # defaults file for nginx
-openresty_version: 1.11.2.5
+openresty_version: 1.13.6.2
 openresty_download_url: https://openresty.org/download/openresty-
 with_luajit: true
 with_dav: true
