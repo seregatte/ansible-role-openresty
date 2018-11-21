@@ -19,22 +19,23 @@
           become: yes
 
         - name: Install required packages to compile OpenResty from source - Ubuntu
-          apt: name={{ item }}
-          with_items:
-            - build-essential
-            - libreadline-dev
-            - make
-            - libncurses5-dev
-            - libpcre3-dev
-            - libssl-dev
-            - perl
-            - libxml2-dev     #Optional
-            - libxslt-dev     #Optional
-            - libgd-dev       #Optional
-            - libgeoip-dev    #Optional
-            - libpq-dev       #Optional
-            - libgd2-xpm-dev  #Optional
-            - libxslt1-dev    #Optional
+          apt:
+            name:
+              - build-essential
+              - libreadline-dev
+              - make
+              - libncurses5-dev
+              - libpcre3-dev
+              - libssl-dev
+              - perl
+              - libxml2-dev     #Optional
+              - libxslt-dev     #Optional
+              - libgd-dev       #Optional
+              - libgeoip-dev    #Optional
+              - libpq-dev       #Optional
+              - libgd2-xpm-dev  #Optional
+              - libxslt1-dev    #Optional
+            state: latest
 
       when: ansible_distribution == "Ubuntu"
 
@@ -47,22 +48,21 @@
 
         - name: Install required packages to compile OpenResty from source - CentOS
           yum:
-            name: "{{ item }}"
+            name:
+              - "@Development tools"
+              - readline-devel
+              - pcre-devel
+              - openssl-devel
+              - gcc
+              - curl
+              - postgresql-libs
+              - postgresql-devel
+              - perl
+              - libxslt-devel
+              - libxml2-devel
+              - gd-devel
+              - geoip-devel
             state: latest
-          with_items:
-            - "@Development tools"
-            - readline-devel
-            - pcre-devel
-            - openssl-devel
-            - gcc
-            - curl
-            - postgresql-libs
-            - postgresql-devel
-            - perl
-            - libxslt-devel
-            - libxml2-devel
-            - gd-devel
-            - geoip-devel
 
       when: ansible_distribution == "CentOS"
 

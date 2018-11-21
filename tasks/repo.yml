@@ -17,11 +17,10 @@
 
     - name: Install OpenResty and Resty-CLI on CentOS
       yum:
-        name: "{{ item }}"
+        name:
+          - openresty
+          - openresty-resty
         state: latest
-      with_items:
-        - openresty
-        - openresty-resty
 
   when: ansible_distribution == "CentOS"
 
@@ -46,10 +45,9 @@
 
     - name: Install OpenResty and Resty-CLI on Ubuntu
       apt:
-        name: "{{ item }}"
-        state: present
-      with_items:
-        - openresty
-        - openresty-resty
+        name:
+          - openresty
+          - openresty-resty
+        state: latest
 
   when: ansible_distribution == "Ubuntu"

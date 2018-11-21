@@ -4,13 +4,11 @@
 
 - name: Compile from source
   include_tasks: source.yml
-  #when: resty_install_from_source == true
   tags:
     - source
 
 - name: Install form repo
   include_tasks: repo.yml
-  #when: resty_install_from_source == false
   tags:
     - repo
 
@@ -24,14 +22,12 @@
   # Plain HTTP server
 - name: configure default site for testing
   include_tasks: default_site.yml
-  #when: resty_default_server == true and resty_install_wp == false
   tags:
     - test
 
   # HTTP server configured for WordPress
 - name: configure wordpress site
   include_tasks: wordpress.yml
-  #when: resty_default_server == false and resty_install_wp == true
   tags:
     - wordpress
 
@@ -42,15 +38,3 @@
     enabled: yes
   ignore_errors: yes
   notify: restart openresty
-
-#TODO: REMOVE
-# - name: insert firewalld rule for nginx port {{ nginx_port }}
-#   firewalld:
-#     port: "{{ nginx_port }}/tcp"
-#     permanent: true
-#     state: enabled
-#     immediate: yes
-#   ignore_errors: yes
-#   #when: firewalld_installed == true
-#   tags:
-#     - firewalld
